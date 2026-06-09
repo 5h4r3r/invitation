@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Лиза & Денис — Приглашение на свадьбу</title>
+  <title>Елизавета & Денис — Приглашение на свадьбу</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --pink: #f8e1e4;
-      --champagne: #f7e7ce;
+      --pink: #e8d5d0;
+      --champagne: #ede0c8;
       --white: #ffffff;
-      --dark-green: #2d5a27;
-      --text-dark: #333333;
-      --text-light: #666666;
+      --accent: #8b6f5c;
+      --text-dark: #3d3d3d;
+      --text-light: #6b6b6b;
     }
 
     * {
@@ -48,7 +48,7 @@
       justify-content: center;
       text-align: center;
       overflow: hidden;
-      background: linear-gradient(135deg, var(--pink) 0%, var(--champagne) 100%);
+      background: url('img/ohotnik.jpg') center center / cover no-repeat;
     }
 
     .hero::before {
@@ -58,9 +58,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="%232d5a27" opacity="0.1"/><circle cx="80" cy="40" r="3" fill="%232d5a27" opacity="0.1"/><circle cx="50" cy="70" r="2" fill="%232d5a27" opacity="0.1"/><circle cx="30" cy="90" r="1.5" fill="%232d5a27" opacity="0.1"/><circle cx="70" cy="10" r="1.5" fill="%232d5a27" opacity="0.1"/></svg>') repeat;
-      background-size: 200px 200px;
-      animation: float 20s ease-in-out infinite;
+      background: rgba(0, 0, 0, 0.4);
     }
 
     @keyframes float {
@@ -76,42 +74,43 @@
 
     .hero h1 {
       font-size: 4rem;
-      color: var(--dark-green);
+      color: var(--white);
       margin-bottom: 0.5rem;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
     }
 
     .hero .ampersand {
       font-size: 3rem;
-      color: var(--text-light);
+      color: rgba(255,255,255,0.8);
       font-style: italic;
     }
 
     .hero .date {
       font-size: 1.5rem;
-      color: var(--text-dark);
+      color: var(--white);
       margin-top: 1rem;
       font-weight: 300;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
     }
 
     .hero .cta-button {
       display: inline-block;
       margin-top: 2rem;
       padding: 15px 40px;
-      background: var(--dark-green);
+      background: var(--accent);
       color: var(--white);
       text-decoration: none;
       border-radius: 50px;
       font-size: 1.1rem;
       font-weight: 500;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(45, 90, 39, 0.3);
+      box-shadow: 0 4px 15px rgba(139, 111, 92, 0.3);
     }
 
     .hero .cta-button:hover {
-      background: #1e3d1a;
+      background: #6d5548;
       transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(45, 90, 39, 0.4);
+      box-shadow: 0 6px 20px rgba(139, 111, 92, 0.4);
     }
 
     /* Section Styles */
@@ -127,7 +126,7 @@
     .section-title {
       text-align: center;
       font-size: 2.5rem;
-      color: var(--dark-green);
+      color: var(--accent);
       margin-bottom: 3rem;
       position: relative;
     }
@@ -179,47 +178,131 @@
 
     /* Date & Place */
     .date-place {
-      background: var(--champagne);
+      position: relative;
+      background: url('img/ohotnik.jpg') center center / cover no-repeat;
+      padding: 80px 20px;
     }
 
-    .date-place-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
+    .date-place::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
     }
 
-    .date-place-card {
-      background: var(--white);
-      padding: 30px;
-      border-radius: 15px;
+    .date-place .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .date-place-content {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+
+    .date-place-item {
       text-align: center;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-      transition: transform 0.3s ease;
+      color: var(--white);
     }
 
-    .date-place-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .date-place-card h3 {
-      color: var(--dark-green);
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-    }
-
-    .date-place-card p {
-      color: var(--text-light);
+    .date-place-item h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
       margin-bottom: 0.5rem;
+      opacity: 0.9;
     }
 
-    .date-place-card a {
-      color: var(--dark-green);
-      text-decoration: none;
+    .date-place-item p {
+      font-size: 1rem;
+      opacity: 0.85;
+    }
+
+    .date-place-item a {
+      color: var(--white);
+      text-decoration: underline;
       font-weight: 500;
     }
 
-    .date-place-card a:hover {
-      text-decoration: underline;
+    .date-place-item a:hover {
+      opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+      .date-place-content {
+        flex-direction: column;
+        gap: 30px;
+      }
+    }
+
+    /* Dress Code */
+    .dress-code {
+      background: var(--white);
+      text-align: center;
+    }
+
+    .dress-code-description {
+      color: var(--text-light);
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    .color-palette {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .color-swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .color-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      position: relative;
+    }
+
+    .color-circle::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 50%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><filter id="fabric"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23fabric)" opacity="0.2"/></svg>');
+    }
+
+    .color-circle.pink {
+      background: linear-gradient(135deg, #f8e1e4 0%, #e8c4c8 100%);
+    }
+
+    .color-circle.champagne {
+      background: linear-gradient(135deg, #f7e7ce 0%, #e8d5b8 100%);
+    }
+
+    .color-circle.green {
+      background: linear-gradient(135deg, #4a6741 0%, #3d5636 100%);
+    }
+
+    .color-circle.beige {
+      background: linear-gradient(135deg, #d4c4b0 0%, #c4b4a0 100%);
+    }
+
+    .color-name {
+      font-size: 0.9rem;
+      color: var(--text-light);
     }
 
     /* Timeline */
@@ -266,7 +349,7 @@
       top: 0;
       width: 16px;
       height: 16px;
-      background: var(--dark-green);
+      background: var(--accent);
       border-radius: 50%;
       border: 3px solid var(--white);
       box-shadow: 0 0 0 3px var(--pink);
@@ -282,7 +365,7 @@
 
     .timeline-time {
       font-weight: 500;
-      color: var(--dark-green);
+      color: var(--accent);
       font-size: 1.1rem;
     }
 
@@ -332,7 +415,7 @@
     .form-group select:focus,
     .form-group textarea:focus {
       outline: none;
-      border-color: var(--dark-green);
+      border-color: var(--accent);
     }
 
     .form-group textarea {
@@ -343,7 +426,7 @@
     .submit-button {
       width: 100%;
       padding: 15px;
-      background: var(--dark-green);
+      background: var(--accent);
       color: var(--white);
       border: none;
       border-radius: 10px;
@@ -354,72 +437,13 @@
     }
 
     .submit-button:hover {
-      background: #1e3d1a;
+      background: #6d5548;
       transform: translateY(-2px);
-    }
-
-    /* Gallery */
-    .gallery {
-      background: var(--white);
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-    }
-
-    .gallery-item {
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-
-    .gallery-item:hover {
-      transform: scale(1.05);
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* Wishes */
-    .wishes {
-      background: var(--champagne);
-    }
-
-    .wishes-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .wish-card {
-      background: var(--white);
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-    }
-
-    .wish-card p {
-      font-style: italic;
-      color: var(--text-light);
-      margin-bottom: 10px;
-    }
-
-    .wish-card .author {
-      font-weight: 500;
-      color: var(--dark-green);
-      text-align: right;
     }
 
     /* Timer */
     .timer {
-      background: var(--dark-green);
+      background: var(--accent);
       color: var(--white);
       text-align: center;
     }
@@ -456,49 +480,12 @@
       letter-spacing: 2px;
     }
 
-    /* Contacts */
-    .contacts {
-      background: var(--white);
-    }
-
-    .contacts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      text-align: center;
-    }
-
-    .contact-item h3 {
-      color: var(--dark-green);
-      margin-bottom: 10px;
-    }
-
-    .contact-item p {
-      color: var(--text-light);
-    }
-
-    .contact-item a {
-      color: var(--dark-green);
-      text-decoration: none;
-    }
-
-    .contact-item a:hover {
-      text-decoration: underline;
-    }
-
     /* Footer */
     footer {
       background: var(--text-dark);
       color: var(--white);
       text-align: center;
       padding: 30px 20px;
-    }
-
-    footer .hashtag {
-      font-size: 1.2rem;
-      font-weight: 500;
-      margin-top: 10px;
-      color: var(--pink);
     }
 
     /* Animations */
@@ -566,7 +553,7 @@
   <!-- Hero Section -->
   <section class="hero" id="hero">
     <div class="hero-content">
-      <h1>Лиза <span class="ampersand">&</span> Денис</h1>
+      <h1>Елизавета <span class="ampersand">&</span> Денис</h1>
       <p class="date">12 сентября 2026</p>
       <a href="#rsvp" class="cta-button">Подтвердить присутствие</a>
     </div>
@@ -592,27 +579,47 @@
   <!-- Date & Place -->
   <section class="date-place" id="date-place">
     <div class="container">
-      <h2 class="section-title fade-in">Дата и место</h2>
-      <div class="date-place-grid">
-        <div class="date-place-card fade-in">
-          <h3>📅 Дата</h3>
+      <div class="date-place-content">
+        <div class="date-place-item fade-in">
+          <h3>Дата</h3>
           <p><strong>12 сентября 2026 года</strong></p>
           <p>Суббота</p>
         </div>
-        <div class="date-place-card fade-in">
-          <h3>📍 Место</h3>
+        <div class="date-place-item fade-in">
+          <h3>Место</h3>
           <p><strong>Ресторан «Охотник»</strong></p>
           <p>г. Курган</p>
           <p><a href="https://kurgan.wed-expert.com/profiles/ohotnik_2" target="_blank">Подробнее о месте</a></p>
         </div>
-        <div class="date-place-card fade-in">
-          <h3>🅿️ Парковка</h3>
+        <div class="date-place-item fade-in">
+          <h3>Парковка</h3>
           <p>Бесплатная парковка рядом с рестораном</p>
         </div>
-        <div class="date-place-card fade-in">
-          <h3>👗 Дресс-код</h3>
-          <p>Элегантный стиль</p>
-          <p>Цвета: пудровый, шампань, тёмно-зелёный</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dress Code -->
+  <section class="dress-code" id="dress-code">
+    <div class="container">
+      <h2 class="section-title fade-in">Дресс-код</h2>
+      <p class="dress-code-description fade-in">Элегантный стиль. Просим придерживаться палитры в ваших нарядах:</p>
+      <div class="color-palette fade-in">
+        <div class="color-swatch">
+          <div class="color-circle pink"></div>
+          <span class="color-name">Пудровый</span>
+        </div>
+        <div class="color-swatch">
+          <div class="color-circle champagne"></div>
+          <span class="color-name">Шампань</span>
+        </div>
+        <div class="color-swatch">
+          <div class="color-circle beige"></div>
+          <span class="color-name">Бежевый</span>
+        </div>
+        <div class="color-swatch">
+          <div class="color-circle green"></div>
+          <span class="color-name">Тёмно-зелёный</span>
         </div>
       </div>
     </div>
@@ -695,86 +702,22 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="dish">Предпочтение по блюду</label>
-          <select id="dish" name="dish">
-            <option value="meat">Мясо</option>
-            <option value="fish">Рыба</option>
-            <option value="vegetarian">Вегетарианское</option>
+          <label for="drink">Предпочтение по алкоголю</label>
+          <select id="drink" name="drink">
+            <option value="wine">Вино</option>
+            <option value="champagne">Шампанское</option>
+            <option value="vodka">Водка</option>
+            <option value="none">Не пью</option>
           </select>
-        </div>
-        <div class="form-group">
-          <label for="wishes">Пожелания</label>
-          <textarea id="wishes" name="wishes" placeholder="Ваши пожелания или особые просьбы..."></textarea>
         </div>
         <button type="submit" class="submit-button">Отправить</button>
       </form>
     </div>
   </section>
 
-  <!-- Gallery -->
-  <section class="gallery" id="gallery">
-    <div class="container">
-      <h2 class="section-title fade-in">Галерея</h2>
-      <div class="gallery-grid">
-        <div class="gallery-item fade-in">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop" alt="Фото 1">
-        </div>
-        <div class="gallery-item fade-in">
-          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400&h=300&fit=crop" alt="Фото 2">
-        </div>
-        <div class="gallery-item fade-in">
-          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=300&fit=crop" alt="Фото 3">
-        </div>
-        <div class="gallery-item fade-in">
-          <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=400&h=300&fit=crop" alt="Фото 4">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Wishes -->
-  <section class="wishes" id="wishes">
-    <div class="container">
-      <h2 class="section-title fade-in">Пожелания</h2>
-      <div class="wishes-container">
-        <div class="wish-card fade-in">
-          <p>«Желаем вам бесконечного счастья и любви! Пусть ваш дом будет полон радости!»</p>
-          <div class="author">— Мария и Алексей</div>
-        </div>
-        <div class="wish-card fade-in">
-          <p>«Поздравляем! Пусть ваша жизнь будет наполнена только светлыми моментами!»</p>
-          <div class="author">— Семья Петровых</div>
-        </div>
-        <div class="wish-card fade-in">
-          <p>«Счастья, здоровья и благополучия! Любви вам на долгие годы!»</p>
-          <div class="author">— Ольга и Дмитрий</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contacts -->
-  <section class="contacts" id="contacts">
-    <div class="container">
-      <h2 class="section-title fade-in">Контакты</h2>
-      <div class="contacts-grid">
-        <div class="contact-item fade-in">
-          <h3>Организатор</h3>
-          <p>Татьяна</p>
-          <p><a href="tel:+79001234567">+7 (900) 123-45-67</a></p>
-        </div>
-        <div class="contact-item fade-in">
-          <h3>Онлайн-трансляция</h3>
-          <p><a href="#" target="_blank">Ссылка будет позже</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Footer -->
   <footer>
-    <p>© 2026 Лиза & Денис</p>
-    <p class="hashtag">#Ивановы2026</p>
+    <p>© 2026 Елизавета & Денис</p>
   </footer>
 
   <script>
