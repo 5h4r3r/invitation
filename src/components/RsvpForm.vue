@@ -3,7 +3,12 @@
     <div class="container">
       <h2 class="section-title fade-in">Подтверждение присутствия</h2>
 
-      <div v-if="confirmed" class="confirmed-message fade-in">
+      <div v-if="loading" class="rsvp-loader">
+        <div class="spinner"></div>
+        <p>Загрузка...</p>
+      </div>
+
+      <div v-else-if="confirmed" class="confirmed-message fade-in">
         <div class="confirmed-icon">&#10003;</div>
         <p>Вы подтвердили приглашение!</p>
         <p class="confirmed-sub">Ждём вас 12 сентября 2026</p>
@@ -45,11 +50,11 @@
 import { ref } from 'vue'
 import { useGuest } from '../composables/useGuest'
 
-const props = defineProps({
+defineProps({
   guestName: { type: String, default: '' },
 })
 
-const { confirmed, submitConfirmation } = useGuest()
+const { confirmed, loading, submitConfirmation } = useGuest()
 
 const guests = ref('1')
 const drink = ref('wine')
@@ -113,5 +118,34 @@ async function handleSubmit() {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
+}
+
+.rsvp-loader {
+  max-width: 500px;
+  margin: 0 auto;
+  background: var(--white);
+  padding: 80px 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--pink);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.rsvp-loader p {
+  color: var(--text-light);
+  font-size: 0.95rem;
 }
 </style>

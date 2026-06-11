@@ -4,6 +4,7 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwJhFksNGdQ8kt2HHenomQT
 
 const guestName = ref('')
 const confirmed = ref(false)
+const loading = ref(true)
 
 async function api(method, params) {
   const query = new URLSearchParams(params).toString()
@@ -27,6 +28,7 @@ async function api(method, params) {
 
 export function useGuest() {
   async function initGuestName() {
+    loading.value = true
     const urlParams = new URLSearchParams(window.location.search)
     let token = urlParams.get('code')
     if (!token) {
@@ -45,6 +47,7 @@ export function useGuest() {
         confirmed.value = data.confirmed === true
       }
     }
+    loading.value = false
   }
 
   async function submitConfirmation(guests, drink) {
@@ -62,5 +65,5 @@ export function useGuest() {
     return data
   }
 
-  return { guestName, confirmed, initGuestName, submitConfirmation }
+  return { guestName, confirmed, loading, initGuestName, submitConfirmation }
 }
