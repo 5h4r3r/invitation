@@ -9,7 +9,7 @@
           <p>И вот пришло время сказать друг другу "Да" перед самыми близкими людьми.</p>
         </div>
         <div class="love-story-image fade-in" ref="imageRef">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop" alt="Пара">
+          <img src="/img/story-photo.webp" alt="Пара">
         </div>
       </div>
     </div>
