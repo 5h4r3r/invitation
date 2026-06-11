@@ -3,17 +3,24 @@ import { ref } from 'vue'
 const API_URL = 'https://script.google.com/macros/s/AKfycbyd61CwRGy0aInI9IsN_Rr5tWZXggucgXFClijc5eXJsAvry-ZdHiUjgkNjJc7wQMxmtw/exec'
 
 const guestName = ref('')
+const confirmed = ref(false)
 
-async function fetchGuestName(token) {
+async function api(method, params) {
+  const query = new URLSearchParams(params).toString()
+  const url = method === 'POST'
+    ? API_URL
+    : `${API_URL}${query ? '?' + query : ''}`
+
   try {
-    const response = await fetch(`${API_URL}?token=${encodeURIComponent(token)}`)
-    const data = await response.json()
-    if (data.status === 'ok' && data.name) {
-      return data.name
-    }
-    return null
+    const response = await fetch(url, method === 'POST'
+      ? { method: 'POST', body: query, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+      : {})
+    const text = await response.text()
+    // Google Script может обернуть ответ в <pre>
+    const data = JSON.parse(text.replace(/<[^>]*>/g, ''))
+    return data
   } catch (error) {
-    console.error('Error fetching guest name:', error)
+    console.error('API error:', error)
     return null
   }
 }
@@ -32,12 +39,28 @@ export function useGuest() {
         const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '')
         window.history.replaceState({}, document.title, newUrl)
       }
-      const name = await fetchGuestName(token)
-      if (name) {
-        guestName.value = name
+      const data = await api('GET', { token })
+      if (data && data.status === 'ok') {
+        guestName.value = data.name || ''
+        confirmed.value = data.confirmed === true
       }
     }
   }
 
-  return { guestName, initGuestName }
+  async function submitConfirmation(guests, drink) {
+    const urlParams = new URLSearchParams(window.location.search)
+    let token = urlParams.get('code')
+    if (!token) {
+      token = localStorage.getItem('weddingToken')
+    }
+    if (!token) return null
+
+    const data = await api('GET', { token, action: 'confirm', guests, drink })
+    if (data && data.status === 'ok') {
+      confirmed.value = true
+    }
+    return data
+  }
+
+  return { guestName, confirmed, initGuestName, submitConfirmation }
 }
