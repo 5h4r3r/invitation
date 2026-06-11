@@ -29,6 +29,7 @@ async function api(method, params) {
 export function useGuest() {
   async function initGuestName() {
     loading.value = true
+    await new Promise(r => setTimeout(r, 0))
     const urlParams = new URLSearchParams(window.location.search)
     let token = urlParams.get('code')
     if (!token) {
