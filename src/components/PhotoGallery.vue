@@ -81,7 +81,7 @@ defineProps({
 }
 
 .photo-button:hover {
-  background: #b09470;
+  background: #c49378;
   transform: translateY(-2px);
 }
 </style>

@@ -1,10 +1,10 @@
 :root {
-  --pink: #f0e6d8;
-  --champagne: #e8dbc8;
-  --white: #fffaf7;
-  --accent: #c4a882;
+  --pink: #f2e0db;
+  --champagne: #eddccd;
+  --white: #fdf8f5;
+  --accent: #d4a88e;
   --text-dark: #3d2c2a;
-  --text-light: #7a6b63;
+  --text-light: #8a7a72;
 }
 
 * {
@@ -102,13 +102,13 @@ h1, h2, h3, h4 {
   font-size: 1.1rem;
   font-weight: 500;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(196, 168, 130, 0.3);
+  box-shadow: 0 4px 15px rgba(212, 168, 142, 0.3);
 }
 
 .hero .cta-button:hover {
-  background: #b09470;
+  background: #c49378;
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(196, 168, 130, 0.4);
+  box-shadow: 0 6px 20px rgba(212, 168, 142, 0.4);
 }
 
 /* Section Styles */
@@ -442,7 +442,7 @@ section {
 }
 
 .submit-button:hover {
-  background: #b09470;
+  background: #c49378;
   transform: translateY(-2px);
 }
 
