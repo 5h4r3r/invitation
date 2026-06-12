@@ -2,17 +2,18 @@
   <section class="music-player" id="music">
     <div class="container">
       <h2 class="section-title fade-in">Наш плейлист</h2>
-      <p class="music-description fade-in">Песня, под которую мы танцуем наш первый танец</p>
+      <p class="music-description fade-in">{{ label }}</p>
       <div class="player-wrapper fade-in">
         <iframe
+          v-for="(track, i) in tracks"
+          :key="i"
           frameborder="0"
           allow="clipboard-write; autoplay"
-          :src="playerSrc"
-          :style="playerStyle"
+          :src="`https://music.yandex.ru/iframe/album/${track.album}/track/${track.track}`"
+          style="border:none;width:100%;height:244px"
           allowfullscreen
           loading="lazy"
         >
-          Слушайте <a href="https://music.yandex.ru/album/1901380/track/256557">DARE</a> — Gorillaz на Яндекс Музыке
         </iframe>
       </div>
     </div>
@@ -20,15 +21,10 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-
-const playerSrc = 'https://music.yandex.ru/iframe/album/1901380/track/256557'
-
-const playerStyle = computed(() => ({
-  border: 'none',
-  width: '100%',
-  height: '244px',
-}))
+const props = defineProps({
+  tracks: { type: Array, default: () => [] },
+  label: { type: String, default: '' },
+})
 </script>
 
 <style scoped>
