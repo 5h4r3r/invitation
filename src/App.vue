@@ -7,6 +7,7 @@
   <TimelineSection />
   <TimerSection />
   <FaqSection />
+  <MusicPlayer />
   <RsvpForm :guestName="guestName" />
   <SiteFooter />
 </template>
@@ -22,6 +23,7 @@ import DressCode from './components/DressCode.vue'
 import TimelineSection from './components/TimelineSection.vue'
 import TimerSection from './components/TimerSection.vue'
 import FaqSection from './components/FaqSection.vue'
+import MusicPlayer from './components/MusicPlayer.vue'
 import RsvpForm from './components/RsvpForm.vue'
 import SiteFooter from './components/SiteFooter.vue'
 
