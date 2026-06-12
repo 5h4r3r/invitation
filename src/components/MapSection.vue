@@ -70,7 +70,7 @@ onMounted(() => {
 }
 
 .map-button:hover {
-  background: #6d5548;
+  background: #b09470;
   transform: translateY(-2px);
 }
 

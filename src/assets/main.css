@@ -1,10 +1,10 @@
 :root {
-  --pink: #e8d5d0;
-  --champagne: #ede0c8;
-  --white: #ffffff;
-  --accent: #8b6f5c;
-  --text-dark: #3d3d3d;
-  --text-light: #6b6b6b;
+  --pink: #f0e6d8;
+  --champagne: #e8dbc8;
+  --white: #fffaf7;
+  --accent: #c4a882;
+  --text-dark: #3d2c2a;
+  --text-light: #7a6b63;
 }
 
 * {
@@ -102,13 +102,13 @@ h1, h2, h3, h4 {
   font-size: 1.1rem;
   font-weight: 500;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(139, 111, 92, 0.3);
+  box-shadow: 0 4px 15px rgba(196, 168, 130, 0.3);
 }
 
 .hero .cta-button:hover {
-  background: #6d5548;
+  background: #b09470;
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(139, 111, 92, 0.4);
+  box-shadow: 0 6px 20px rgba(196, 168, 130, 0.4);
 }
 
 /* Section Styles */
@@ -442,7 +442,7 @@ section {
 }
 
 .submit-button:hover {
-  background: #6d5548;
+  background: #b09470;
   transform: translateY(-2px);
 }
 
