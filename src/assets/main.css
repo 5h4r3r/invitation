@@ -29,112 +29,6 @@ h1, h2, h3, h4 {
   font-family: 'Playfair Display', serif;
 }
 
-/* Hero Section */
-.hero {
-  position: relative;
-  height: 100vh;
-  min-height: 600px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
-  background: url('/img/ohotnik.jpg') center center / cover no-repeat;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  padding: 20px;
-}
-
-.hero h1 {
-  font-size: 4rem;
-  color: var(--white);
-  margin-bottom: 0.5rem;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-}
-
-.hero .ampersand {
-  font-size: 3rem;
-  color: rgba(255,255,255,0.8);
-  font-style: italic;
-}
-
-.hero .guest-name {
-  font-size: 1.3rem;
-  color: rgba(255,255,255,0.9);
-  margin-bottom: 0.5rem;
-  font-weight: 300;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-}
-
-.hero .hero-subtitle {
-  font-size: 1.25rem;
-  color: rgba(255,255,255,0.85);
-  margin-bottom: 0.75rem;
-  font-weight: 300;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-  font-family: 'Montserrat', sans-serif;
-}
-
-.hero .date {
-  font-size: 1.5rem;
-  color: var(--white);
-  margin-top: 1rem;
-  font-weight: 300;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-}
-
-.hero .date-day {
-  font-size: 1rem;
-  opacity: 0.8;
-  font-weight: 400;
-  text-transform: lowercase;
-}
-
-.hero .cta-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 2rem;
-  padding: 15px 40px;
-  background: var(--accent);
-  color: var(--white);
-  text-decoration: none;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 15px rgba(212, 168, 142, 0.3);
-}
-
-.hero .cta-button:hover {
-  background: var(--accent-hover);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(196, 147, 120, 0.4);
-}
-.hero .cta-button:active {
-  transform: translateY(-1px);
-}
-
 /* Section Styles */
 section {
   padding: 80px 20px;
@@ -598,18 +492,6 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .hero h1 {
-    font-size: 2.5rem;
-  }
-
-  .hero .ampersand {
-    font-size: 2rem;
-  }
-
-  .hero .date {
-    font-size: 1.2rem;
-  }
-
   .love-story-content {
     flex-direction: column;
   }
