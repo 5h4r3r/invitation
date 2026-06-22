@@ -27,26 +27,62 @@
         </div>
 
         <div class="form-group">
-          <label for="guests">Количество гостей</label>
-          <select id="guests" v-model="guests" :disabled="sending">
-            <option value="1">1 гость</option>
-            <option value="2">2 гостя</option>
-            <option value="3">3 гостя</option>
-            <option value="4">4 гостя</option>
-          </select>
+          <label>Сможете ли вы присутствовать?</label>
+          <div class="rsvp-toggle">
+            <button
+              type="button"
+              class="rsvp-toggle-btn"
+              :class="{ active: willAttend === true }"
+              @click="willAttend = true"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Да, буду
+            </button>
+            <button
+              type="button"
+              class="rsvp-toggle-btn"
+              :class="{ active: willAttend === false }"
+              @click="willAttend = false"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+              Нет, не смогу
+            </button>
+          </div>
         </div>
+
+        <template v-if="willAttend === true">
+          <div class="form-group">
+            <label for="guests">Количество гостей</label>
+            <select id="guests" v-model="guests" :disabled="sending">
+              <option value="1">1 гость</option>
+              <option value="2">2 гостя</option>
+              <option value="3">3 гостя</option>
+              <option value="4">4 гостя</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="drink">Предпочтение по алкоголю</label>
+            <select id="drink" v-model="drink" :disabled="sending">
+              <option value="wine">Вино</option>
+              <option value="champagne">Шампанское</option>
+              <option value="vodka">Водка</option>
+              <option value="none">Не пью</option>
+            </select>
+          </div>
+        </template>
 
         <div class="form-group">
-          <label for="drink">Предпочтение по алкоголю</label>
-          <select id="drink" v-model="drink" :disabled="sending">
-            <option value="wine">Вино</option>
-            <option value="champagne">Шампанское</option>
-            <option value="vodka">Водка</option>
-            <option value="none">Не пью</option>
-          </select>
+          <label for="wishes">Пожелания</label>
+          <textarea id="wishes" v-model="wishes" placeholder="Ваши пожелания или комментарии..." :disabled="sending" rows="3"></textarea>
         </div>
 
-        <button type="submit" class="btn-primary w-full" :disabled="sending">
+        <button type="submit" class="btn-primary w-full" :disabled="sending || willAttend === null">
           {{ sending ? 'Отправка...' : 'Отправить' }}
         </button>
 
@@ -66,8 +102,10 @@ defineProps({
 
 const { confirmed, loading, submitConfirmation } = useGuest()
 
+const willAttend = ref(null)
 const guests = ref('1')
 const drink = ref('wine')
+const wishes = ref('')
 const sending = ref(false)
 const error = ref('')
 
@@ -79,7 +117,12 @@ const formRef = ref(null)
 async function handleSubmit() {
   error.value = ''
   sending.value = true
-  const result = await submitConfirmation(guests.value, drink.value)
+
+  const submitGuests = willAttend ? guests.value : '0'
+  const submitDrink = willAttend ? drink.value : 'none'
+  const submitWishes = wishes.value
+
+  const result = await submitConfirmation(submitGuests, submitDrink, submitWishes)
   sending.value = false
   if (!result || result.status !== 'ok') {
     error.value = 'Ошибка при отправке. Попробуйте ещё раз.'
@@ -182,7 +225,8 @@ onMounted(() => {
 }
 
 .form-group input,
-.form-group select {
+.form-group select,
+.form-group textarea {
   width: 100%;
   padding: 12px 15px;
   border: 2px solid var(--pink);
@@ -194,9 +238,15 @@ onMounted(() => {
 }
 
 .form-group input:focus,
-.form-group select:focus {
+.form-group select:focus,
+.form-group textarea:focus {
   outline: none;
   border-color: var(--accent);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
 }
 
 .form-guest-name {
@@ -211,6 +261,50 @@ onMounted(() => {
   text-align: center;
   margin-top: 15px;
   font-size: 0.9rem;
+}
+
+/* Toggle buttons */
+.rsvp-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rsvp-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px;
+  border: 2px solid var(--pink);
+  border-radius: 12px;
+  background: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rsvp-toggle-btn:hover {
+  border-color: var(--accent);
+  background: rgba(242, 224, 219, 0.2);
+}
+
+.rsvp-toggle-btn.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--white);
+}
+
+.rsvp-toggle-btn.active svg {
+  stroke: var(--white);
+}
+
+.rsvp-toggle-btn svg {
+  stroke: var(--accent);
 }
 
 .spinner {
