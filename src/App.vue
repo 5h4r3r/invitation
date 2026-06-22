@@ -7,7 +7,6 @@
   <DressCode />
   <TimelineSection />
   <TimerSection />
-  <ScheduleSection />
   <FaqSection />
   <MusicPlayer
     v-if="config.musicPlayer.enabled"
@@ -35,7 +34,6 @@ import DressCode from './components/DressCode.vue'
 import TimelineSection from './components/TimelineSection.vue'
 import TimerSection from './components/TimerSection.vue'
 import FaqSection from './components/FaqSection.vue'
-import ScheduleSection from './components/ScheduleSection.vue'
 import MusicPlayer from './components/MusicPlayer.vue'
 import PhotoGallery from './components/PhotoGallery.vue'
 import RsvpForm from './components/RsvpForm.vue'
