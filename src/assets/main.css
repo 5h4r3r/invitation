@@ -84,12 +84,28 @@ h1, h2, h3, h4 {
   text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
 }
 
+.hero .hero-subtitle {
+  font-size: 1.25rem;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 0.75rem;
+  font-weight: 300;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+  font-family: 'Montserrat', sans-serif;
+}
+
 .hero .date {
   font-size: 1.5rem;
   color: var(--white);
   margin-top: 1rem;
   font-weight: 300;
   text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+}
+
+.hero .date-day {
+  font-size: 1rem;
+  opacity: 0.8;
+  font-weight: 400;
+  text-transform: lowercase;
 }
 
 .hero .cta-button {
