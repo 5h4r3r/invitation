@@ -1,8 +1,11 @@
 <template>
   <section class="photo-gallery" id="photos">
     <div class="container">
-      <h2 class="section-title fade-in">Фото со свадьбы</h2>
-      <div class="photo-card fade-in">
+      <div class="fade-in" ref="titleRef">
+        <h2 class="section-title">Фото со свадьбы</h2>
+      </div>
+
+      <div class="photo-card fade-in" ref="cardRef">
         <div class="photo-icon-circle">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
@@ -35,8 +38,27 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+
 defineProps({
   link: { type: String, default: '' },
+})
+
+const titleRef = ref(null)
+const cardRef = ref(null)
+
+onMounted(() => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible')
+      }
+    })
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' })
+
+  ;[titleRef.value, cardRef.value].forEach(el => {
+    if (el) observer.observe(el)
+  })
 })
 </script>
 
@@ -49,6 +71,7 @@ defineProps({
 .photo-card {
   max-width: 500px;
   margin: 0 auto;
+  margin-top: 48px;
   background: var(--white);
   padding: 60px 40px;
   border-radius: 20px;

@@ -1,16 +1,30 @@
 <template>
   <section class="love-story" id="love-story">
     <div class="container">
-      <h2 class="section-title fade-in" ref="titleRef">Наша история</h2>
+      <div class="fade-in" ref="titleRef">
+        <h2 class="section-title">Наша история</h2>
+      </div>
+
       <div class="love-story-content">
-        <div class="love-story-text fade-in" ref="textRef">
-          <p>Познакомились в парке одним солнечным днём... С первого взгляда поняли — это судьба.</p>
-          <p>С тех пор мы неразлучны. Вместе путешествуем, мечтаем и строим нашу любовь день за днём.</p>
-          <p>И вот пришло время сказать друг другу "Да" перед самыми близкими людьми.</p>
+        <div class="love-story-text">
+          <div class="fade-in" ref="text1Ref" style="transition-delay: 100ms">
+            <p>Наша история началась несколько лет назад, когда случайная встреча в уютной кофейне переросла в нечто большее. Мы сразу поняли, что нашли друг в друге родственные души — людей, с которыми тепло в любую погоду и спокойно в любой шторм.</p>
+          </div>
+          <div class="fade-in" ref="text2Ref" style="transition-delay: 200ms">
+            <p>С тех пор мы прошли через множество прекрасных моментов: совместные путешествия, тихие вечера с разговорами до рассвета, общие мечты и цели. Каждый день мы учились любить, поддерживать и беречь друг друга.</p>
+          </div>
+          <div class="fade-in" ref="text3Ref" style="transition-delay: 300ms">
+            <p>И вот, в один прекрасный день, было принято самое важное решение — соединить наши сердца навсегда. 12 сентября 2026 года мы хотим сделать этот шаг вместе с вами, нашими самыми близкими и любимыми людьми!</p>
+          </div>
         </div>
-        <div class="love-story-image fade-in" ref="imageRef">
-          <div class="love-story-image-bg"></div>
-          <img src="/img/story-photo.webp" alt="Пара">
+
+        <div class="love-story-image-side">
+          <div class="fade-in" ref="imageRef" style="transition-delay: 300ms">
+            <div class="love-story-image-wrap">
+              <div class="love-story-image-bg"></div>
+              <img src="/img/story-photo.webp" alt="Елизавета и Денис">
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -21,7 +35,9 @@
 import { ref, onMounted } from 'vue'
 
 const titleRef = ref(null)
-const textRef = ref(null)
+const text1Ref = ref(null)
+const text2Ref = ref(null)
+const text3Ref = ref(null)
 const imageRef = ref(null)
 
 onMounted(() => {
@@ -33,15 +49,46 @@ onMounted(() => {
     })
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' })
 
-  ;[titleRef.value, textRef.value, imageRef.value].forEach(el => {
+  ;[titleRef.value, text1Ref.value, text2Ref.value, text3Ref.value, imageRef.value].forEach(el => {
     if (el) observer.observe(el)
   })
 })
 </script>
 
 <style scoped>
-.love-story-image {
+.love-story {
+  background: var(--white);
+}
+
+.love-story-content {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+}
+
+.love-story-text {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.love-story-text p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.love-story-image-side {
+  flex: 1;
+  width: 100%;
+  max-width: 500px;
+}
+
+.love-story-image-wrap {
   position: relative;
   border-radius: 20px;
   overflow: visible;
@@ -58,11 +105,11 @@ onMounted(() => {
   z-index: 0;
 }
 
-.love-story-image:hover .love-story-image-bg {
+.love-story-image-wrap:hover .love-story-image-bg {
   transform: rotate(0deg);
 }
 
-.love-story-image img {
+.love-story-image-wrap img {
   position: relative;
   z-index: 1;
   width: 100%;
@@ -74,7 +121,18 @@ onMounted(() => {
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.love-story-image:hover img {
+.love-story-image-wrap:hover img {
   transform: scale(1.02);
+}
+
+@media (min-width: 768px) {
+  .love-story-content {
+    flex-direction: row;
+    gap: 40px;
+  }
+
+  .love-story-image-side {
+    max-width: none;
+  }
 }
 </style>

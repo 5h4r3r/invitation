@@ -1,17 +1,19 @@
 <template>
   <section class="faq" id="faq">
     <div class="container">
-      <h2 class="section-title fade-in">Частые вопросы</h2>
+      <div class="fade-in" ref="titleRef">
+        <h2 class="section-title">Частые вопросы</h2>
+      </div>
 
-      <div class="faq-list">
+      <div class="faq-list fade-in" ref="listRef">
         <div
           v-for="(item, index) in items"
           :key="index"
-          class="faq-item fade-in"
+          class="faq-item"
           :class="{ open: openIndex === index }"
         >
           <button class="faq-question" @click="toggle(index)">
-            <span>{{ item.q }}</span>
+            <span class="faq-q-text">{{ item.q }}</span>
             <span class="faq-arrow">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
             </span>
@@ -26,8 +28,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
+const titleRef = ref(null)
+const listRef = ref(null)
 const openIndex = ref(null)
 
 function toggle(index) {
@@ -41,6 +45,20 @@ const items = [
   { q: 'Можно ли с детьми?', a: 'К сожалению, мы не сможем принять детей. Пожалуйста, воспользуйтесь услугами няни заранее.' },
   { q: 'Будет ли фотограф?', a: 'Да, у нас будет профессиональный фотограф. Все фото вы сможете получить после свадьбы.' },
 ]
+
+onMounted(() => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible')
+      }
+    })
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' })
+
+  ;[titleRef.value, listRef.value].forEach(el => {
+    if (el) observer.observe(el)
+  })
+})
 </script>
 
 <style scoped>
@@ -51,6 +69,7 @@ const items = [
 .faq-list {
   max-width: 700px;
   margin: 0 auto;
+  margin-top: 48px;
 }
 
 .faq-item {
@@ -80,6 +99,10 @@ const items = [
 
 .faq-question:hover {
   background: rgba(212, 168, 142, 0.06);
+}
+
+.faq-q-text {
+  flex: 1;
 }
 
 .faq-arrow {
