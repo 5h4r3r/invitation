@@ -14,7 +14,7 @@
             <line x1="3" y1="10" x2="21" y2="10"/>
           </svg>
           <h3>Дата и время</h3>
-          <p>12 сентября 2026 года<br>Сбор гостей в 15:30</p>
+          <p>12 сентября 2026 года<br>Сбор гостей в 14:50</p>
         </div>
 
         <div class="dp-card fade-in" ref="card2Ref" style="transition-delay: 200ms">
