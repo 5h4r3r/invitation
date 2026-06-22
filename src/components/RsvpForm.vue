@@ -5,18 +5,18 @@
         <h2 class="section-title">Подтверждение присутствия</h2>
       </div>
 
-      <div v-if="loading" class="rsvp-card fade-in" ref="loadingRef">
+      <div v-if="loading" class="rsvp-card" ref="loadingRef">
         <div class="spinner"></div>
         <p class="rsvp-loading-text">Загрузка...</p>
       </div>
 
-      <div v-else-if="confirmed" class="rsvp-card confirmed-card fade-in" ref="confirmedRef">
+      <div v-else-if="confirmed" class="rsvp-card confirmed-card" ref="confirmedRef">
         <div class="confirmed-icon">&#10003;</div>
         <p class="confirmed-title">Вы подтвердили приглашение!</p>
         <p class="confirmed-sub">Ждём вас 12 сентября 2026</p>
       </div>
 
-      <form v-else class="rsvp-card rsvp-form fade-in" ref="formRef" @submit.prevent="handleSubmit">
+      <form v-else class="rsvp-card rsvp-form" ref="formRef" @submit.prevent="handleSubmit">
         <div class="rsvp-form-intro">
           <p>Пожалуйста, заполните форму ниже</p>
         </div>
