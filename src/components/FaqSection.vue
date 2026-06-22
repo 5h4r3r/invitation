@@ -79,7 +79,7 @@ const items = [
 }
 
 .faq-question:hover {
-  background: rgba(212, 168, 142, 0.04);
+  background: rgba(212, 168, 142, 0.06);
 }
 
 .faq-arrow {

@@ -1,4 +1,5 @@
 <template>
+  <NavBar />
   <HeroSection :guestName="guestName" />
   <LoveStory />
   <DatePlace />
@@ -25,6 +26,7 @@ import { onMounted } from 'vue'
 import { useGuest } from './composables/useGuest'
 import config from './config'
 import HeroSection from './components/HeroSection.vue'
+import NavBar from './components/NavBar.vue'
 import LoveStory from './components/LoveStory.vue'
 import DatePlace from './components/DatePlace.vue'
 import MapSection from './components/MapSection.vue'

@@ -58,20 +58,29 @@ onMounted(() => {
 }
 
 .map-button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   margin-top: 1rem;
-  padding: 12px 30px;
+  padding: 14px 32px;
   background: var(--accent);
   color: var(--white);
   text-decoration: none;
   border-radius: 50px;
   font-weight: 500;
-  transition: all 0.3s ease;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(212, 168, 142, 0.3);
 }
 
 .map-button:hover {
-  background: #c49378;
-  transform: translateY(-2px);
+  background: var(--accent-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(196, 147, 120, 0.4);
+}
+
+.map-button:active {
+  transform: translateY(-1px);
 }
 
 .map-wrapper {

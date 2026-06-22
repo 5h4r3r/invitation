@@ -37,7 +37,7 @@
             <option value="none">Не пью</option>
           </select>
         </div>
-        <button type="submit" class="submit-button" :disabled="sending">
+        <button type="submit" class="btn-primary w-full" :disabled="sending">
           {{ sending ? 'Отправка...' : 'Отправить' }}
         </button>
         <p v-if="error" class="form-error">{{ error }}</p>
