@@ -51,7 +51,7 @@ export function useGuest() {
     loading.value = false
   }
 
-  async function submitConfirmation(guests, drink, wishes) {
+  async function submitConfirmation(guests, drink, transfer, wishes) {
     const urlParams = new URLSearchParams(window.location.search)
     let token = urlParams.get('code')
     if (!token) {
@@ -59,7 +59,7 @@ export function useGuest() {
     }
     if (!token) return null
 
-    const params = { token, action: 'confirm', guests, drink }
+    const params = { token, action: 'confirm', guests, drink, transfer }
     if (wishes) params.wishes = wishes
 
     const data = await api('GET', params)

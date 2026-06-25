@@ -75,6 +75,28 @@
               <option value="none">Не пью</option>
             </select>
           </div>
+
+          <div class="form-group">
+            <label>Нужен ли трансфер?</label>
+            <div class="rsvp-toggle rsvp-toggle-row">
+              <button
+                type="button"
+                class="rsvp-toggle-btn rsvp-toggle-btn-half"
+                :class="{ active: transferNeeded === true }"
+                @click="transferNeeded = true"
+              >
+                Да
+              </button>
+              <button
+                type="button"
+                class="rsvp-toggle-btn rsvp-toggle-btn-half"
+                :class="{ active: transferNeeded === false }"
+                @click="transferNeeded = false"
+              >
+                Нет
+              </button>
+            </div>
+          </div>
         </template>
 
         <div class="form-group">
@@ -105,6 +127,7 @@ const { confirmed, loading, submitConfirmation } = useGuest()
 const willAttend = ref(null)
 const guests = ref('1')
 const drink = ref('wine')
+const transferNeeded = ref(null)
 const wishes = ref('')
 const sending = ref(false)
 const error = ref('')
@@ -120,9 +143,10 @@ async function handleSubmit() {
 
   const submitGuests = willAttend ? guests.value : '0'
   const submitDrink = willAttend ? drink.value : 'none'
+  const submitTransfer = willAttend ? (transferNeeded.value ? 'yes' : 'no') : 'no'
   const submitWishes = wishes.value
 
-  const result = await submitConfirmation(submitGuests, submitDrink, submitWishes)
+  const result = await submitConfirmation(submitGuests, submitDrink, submitTransfer, submitWishes)
   sending.value = false
   if (!result || result.status !== 'ok') {
     error.value = 'Ошибка при отправке. Попробуйте ещё раз.'
@@ -270,6 +294,10 @@ onMounted(() => {
   gap: 10px;
 }
 
+.rsvp-toggle-row {
+  flex-direction: row;
+}
+
 .rsvp-toggle-btn {
   display: flex;
   align-items: center;
@@ -286,6 +314,10 @@ onMounted(() => {
   color: var(--text-dark);
   cursor: pointer;
   transition: all 0.2s;
+}
+
+.rsvp-toggle-btn-half {
+  width: 50%;
 }
 
 .rsvp-toggle-btn:hover {
