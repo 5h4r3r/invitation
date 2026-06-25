@@ -107,6 +107,7 @@
         </button>
 
         <p v-if="error" class="form-error">{{ error }}</p>
+        <p v-if="apiError && !error" class="form-error">{{ apiError }}</p>
       </form>
     </div>
   </section>
@@ -120,7 +121,7 @@ defineProps({
   guestName: { type: String, default: '' },
 })
 
-const { confirmed, loading, submitConfirmation, fetchDrinks } = useGuest()
+const { confirmed, loading, apiError, submitConfirmation, fetchDrinks } = useGuest()
 
 const willAttend = ref(null)
 const guests = ref('1')
@@ -148,7 +149,7 @@ async function handleSubmit() {
   const result = await submitConfirmation(submitGuests, submitDrink, submitTransfer, submitWishes)
   sending.value = false
   if (!result || result.status !== 'ok') {
-    error.value = 'Ошибка при отправке. Попробуйте ещё раз.'
+    error.value = result?.message || 'Ошибка при отправке. Попробуйте ещё раз.'
   }
 }
 

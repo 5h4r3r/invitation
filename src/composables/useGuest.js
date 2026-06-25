@@ -17,12 +17,16 @@ async function api(method, params) {
     const response = await fetch(url, method === 'POST'
       ? { method: 'POST', body: query, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
       : {})
+    if (!response.ok) {
+      console.error('❌ Сервер ответил кодом:', response.status)
+      return { status: 'error', message: 'Сервер недоступен (код ' + response.status + ')' }
+    }
     const text = await response.text()
     const data = JSON.parse(text.replace(/<[^>]*>/g, ''))
     return data
   } catch (error) {
-    console.error('API error:', error)
-    return null
+    console.error('❌ Ошибка сети или парсинга:', error.message || error)
+    return { status: 'error', message: 'Ошибка соединения с сервером. Проверьте интернет.' }
   }
 }
 
@@ -32,10 +36,12 @@ export function useGuest() {
     const name = localStorage.getItem('weddingName')
     const isConfirmed = localStorage.getItem('weddingConfirmed') === 'true'
     if (token && name) {
+      console.log('✅ Гость загружен из localStorage:', name)
       guestName.value = name
       confirmed.value = isConfirmed
       return token
     }
+    console.log('ℹ️ Данные гостя не найдены в localStorage')
     return null
   }
 
@@ -43,6 +49,7 @@ export function useGuest() {
     localStorage.setItem('weddingToken', token || '')
     localStorage.setItem('weddingName', name || '')
     localStorage.setItem('weddingConfirmed', isConfirmed ? 'true' : 'false')
+    console.log('✅ Данные гостя сохранены в localStorage:', name)
   }
 
   async function initGuestName() {
@@ -52,7 +59,7 @@ export function useGuest() {
     const urlToken = urlParams.get('code')
 
     if (urlToken) {
-      // Новый код в URL — загружаем с сервера, перезаписываем storage
+      console.log('🔑 Код из URL:', urlToken)
       localStorage.setItem('weddingToken', urlToken)
       urlParams.delete('code')
       const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '')
@@ -60,14 +67,16 @@ export function useGuest() {
 
       const data = await api('GET', { token: urlToken })
       if (data && data.status === 'ok') {
+        console.log('✅ Гость загружен с сервера:', data.name)
         guestName.value = data.name || ''
         confirmed.value = data.confirmed === true
         saveToStorage(urlToken, guestName.value, confirmed.value)
       } else {
-        apiError.value = data?.message || 'API error'
+        const msg = data?.message || 'Неизвестная ошибка сервера'
+        apiError.value = msg
+        console.error('❌ Ошибка загрузки гостя:', msg)
       }
     } else {
-      // Нет кода в URL — пробуем storage
       const storedToken = restoreFromStorage()
       if (!storedToken) {
         guestName.value = ''
@@ -79,21 +88,34 @@ export function useGuest() {
 
   async function submitConfirmation(guests, drink, transfer, wishes) {
     const storedToken = localStorage.getItem('weddingToken')
-    if (!storedToken) return null
+    if (!storedToken) {
+      console.error('❌ Нет токена для отправки подтверждения')
+      return { status: 'error', message: 'Ошибка авторизации. Откройте ссылку из приглашения.' }
+    }
 
     const params = { token: storedToken, action: 'confirm', guests, drink, transfer, wishes }
+    console.log('📤 Отправка подтверждения:', { guests, drink, transfer, wishes })
 
     const data = await api('GET', params)
     if (data && data.status === 'ok') {
+      console.log('✅ Подтверждение сохранено')
       confirmed.value = true
       saveToStorage(storedToken, guestName.value, true)
+    } else {
+      const msg = data?.message || 'Неизвестная ошибка сервера'
+      console.error('❌ Ошибка подтверждения:', msg)
     }
     return data
   }
 
   async function fetchDrinks() {
     const data = await api('GET', { action: 'getDrinks' })
-    return data && data.status === 'ok' ? data.drinks : []
+    if (data && data.status === 'ok') {
+      console.log('✅ Напитки загружены:', data.drinks)
+      return data.drinks
+    }
+    console.error('❌ Ошибка загрузки напитков:', data?.message || 'нет ответа')
+    return []
   }
 
   return { guestName, confirmed, loading, apiError, initGuestName, submitConfirmation, fetchDrinks }
