@@ -67,14 +67,6 @@
           </div>
 
           <div class="form-group">
-            <label for="drink">Предпочтение по алкоголю</label>
-            <select id="drink" v-model="drink" :disabled="sending">
-              <option value="" disabled>Выберите напиток</option>
-              <option v-for="d in drinks" :key="d" :value="d">{{ d }}</option>
-            </select>
-          </div>
-
-          <div class="form-group">
             <label>Нужен ли трансфер?</label>
             <div class="rsvp-toggle rsvp-toggle-row">
               <button
@@ -100,6 +92,52 @@
         <div class="form-group">
           <label for="wishes">Пожелания</label>
           <textarea id="wishes" v-model="wishes" placeholder="Ваши пожелания или комментарии..." :disabled="sending" rows="3"></textarea>
+        </div>
+
+        <template v-if="willAttend === true">
+          <div class="form-group">
+            <label for="drink">Предпочтение по алкоголю</label>
+            <select id="drink" v-model="drink" :disabled="sending">
+              <option value="" disabled>Выберите напиток</option>
+              <option v-for="d in drinks" :key="d" :value="d">{{ d }}</option>
+            </select>
+          </div>
+        </template>
+
+        <div class="form-group">
+          <label>Есть ли аллергия?</label>
+          <div class="rsvp-toggle rsvp-toggle-row">
+            <button
+              type="button"
+              class="rsvp-toggle-btn rsvp-toggle-btn-half"
+              :class="{ active: hasAllergy === true }"
+              @click="hasAllergy = true"
+            >
+              Да
+            </button>
+            <button
+              type="button"
+              class="rsvp-toggle-btn rsvp-toggle-btn-half"
+              :class="{ active: hasAllergy === false }"
+              @click="hasAllergy = false"
+            >
+              Нет
+            </button>
+          </div>
+          <input
+            v-if="hasAllergy === true"
+            v-model="allergyInfo"
+            type="text"
+            placeholder="Укажите продукты, на которые аллергия"
+            class="form-input"
+            :disabled="sending"
+            style="margin-top: 10px;"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="comment">Комментарий</label>
+          <textarea id="comment" v-model="comment" placeholder="Дополнительные комментарии..." :disabled="sending" rows="2"></textarea>
         </div>
 
         <input type="text" v-model="botField" class="honeypot" tabindex="-1" autocomplete="off" />
@@ -131,6 +169,9 @@ const drink = ref('')
 const drinks = ref([])
 const transferNeeded = ref(null)
 const wishes = ref('')
+const hasAllergy = ref(null)
+const allergyInfo = ref('')
+const comment = ref('')
 const botField = ref('')
 const formLoadedAt = ref(0)
 const sending = ref(false)
@@ -163,8 +204,10 @@ async function handleSubmit() {
   const submitDrink = willAttend ? drink.value : 'Не пью'
   const submitTransfer = willAttend ? (transferNeeded.value ? 'yes' : 'no') : 'no'
   const submitWishes = wishes.value
+  const submitAllergy = hasAllergy.value ? (hasAllergy.value === true ? (allergyInfo.value || 'Да') : 'Нет') : ''
+  const submitComment = comment.value
 
-  const result = await submitConfirmation(submitGuests, submitDrink, submitTransfer, submitWishes)
+  const result = await submitConfirmation(submitGuests, submitDrink, submitTransfer, submitWishes, submitAllergy, submitComment)
   sending.value = false
   if (!result || result.status !== 'ok') {
     error.value = result?.message || 'Ошибка при отправке. Попробуйте ещё раз.'
