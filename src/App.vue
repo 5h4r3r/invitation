@@ -1,6 +1,6 @@
 <template>
   <NavBar />
-  <HeroSection :guestName="guestName" />
+  <HeroSection :guestName="guestName" :loading="loading" />
   <LoveStory />
   <DatePlace />
   <MapSection />
@@ -39,7 +39,7 @@ import PhotoGallery from './components/PhotoGallery.vue'
 import RsvpForm from './components/RsvpForm.vue'
 import SiteFooter from './components/SiteFooter.vue'
 
-const { guestName, initGuestName } = useGuest()
+const { guestName, loading, initGuestName } = useGuest()
 
 onMounted(() => {
   initGuestName()

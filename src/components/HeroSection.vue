@@ -6,7 +6,10 @@
 
     <div class="hero-content">
       <div class="hero-inner">
-        <span class="hero-guest-name">{{ guestName }},</span>
+        <span v-if="loading" class="hero-guest-name hero-guest-name-loading">
+          <span class="hero-name-skeleton"></span>
+        </span>
+        <span v-else class="hero-guest-name">{{ guestName }},</span>
         <span class="hero-invite-text">Приглашаем вас на свадьбу</span>
 
         <h1 class="hero-title">
@@ -44,7 +47,8 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 defineProps({
-  guestName: { type: String, default: '' }
+  guestName: { type: String, default: '' },
+  loading: { type: Boolean, default: false },
 })
 
 const heroRef = ref(null)
@@ -136,6 +140,22 @@ onUnmounted(() => {
   letter-spacing: 0.02em;
   margin-bottom: 24px;
   font-family: 'Montserrat', sans-serif;
+}
+
+.hero-name-skeleton {
+  display: inline-block;
+  width: 160px;
+  height: 1.3rem;
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.15) 25%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.15) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  vertical-align: middle;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 .hero-invite-text {
