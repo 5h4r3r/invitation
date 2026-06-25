@@ -7,10 +7,11 @@
       <div class="nav-links">
         <a href="#love-story">История</a>
         <a href="#date-place">Детали</a>
+        <a href="#map">Как добраться</a>
         <a href="#dress-code">Дресс-код</a>
         <a href="#timeline">Программа</a>
         <a href="#faq">Вопросы</a>
-        <a href="#music">Музыка</a>
+        <a href="#music" v-if="config.musicPlayer.enabled">Музыка</a>
         <a href="#rsvp" class="nav-rsvp-link">Подтвердить</a>
       </div>
       <button class="nav-toggle" @click="mobileOpen = !mobileOpen" aria-label="Меню">
@@ -20,10 +21,11 @@
     <div class="nav-mobile" :class="{ open: mobileOpen }">
       <a href="#love-story" @click="mobileOpen = false">История</a>
       <a href="#date-place" @click="mobileOpen = false">Детали</a>
+      <a href="#map" @click="mobileOpen = false">Как добраться</a>
       <a href="#dress-code" @click="mobileOpen = false">Дресс-код</a>
       <a href="#timeline" @click="mobileOpen = false">Программа</a>
       <a href="#faq" @click="mobileOpen = false">Вопросы</a>
-      <a href="#music" @click="mobileOpen = false">Музыка</a>
+      <a href="#music" @click="mobileOpen = false" v-if="config.musicPlayer.enabled">Музыка</a>
       <a href="#rsvp" @click="mobileOpen = false" class="nav-rsvp-link">Подтвердить</a>
     </div>
   </nav>
@@ -31,6 +33,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import config from '../config'
 
 const scrolled = ref(false)
 const mobileOpen = ref(false)
