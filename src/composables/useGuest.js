@@ -5,6 +5,7 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbzUR7C9QXTv0rU4_JUrd-k9
 const guestName = ref('')
 const confirmed = ref(false)
 const loading = ref(true)
+const apiError = ref('')
 
 async function api(method, params) {
   const query = new URLSearchParams(params).toString()
@@ -17,7 +18,6 @@ async function api(method, params) {
       ? { method: 'POST', body: query, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
       : {})
     const text = await response.text()
-    // Google Script может обернуть ответ в <pre>
     const data = JSON.parse(text.replace(/<[^>]*>/g, ''))
     return data
   } catch (error) {
@@ -28,8 +28,7 @@ async function api(method, params) {
 
 export function useGuest() {
   async function initGuestName() {
-    loading.value = true
-    await new Promise(r => setTimeout(r, 0))
+    apiError.value = ''
     const urlParams = new URLSearchParams(window.location.search)
     let token = urlParams.get('code')
     if (!token) {
@@ -46,6 +45,8 @@ export function useGuest() {
       if (data && data.status === 'ok') {
         guestName.value = data.name || ''
         confirmed.value = data.confirmed === true
+      } else {
+        apiError.value = data?.message || 'API error'
       }
     }
     loading.value = false
@@ -73,5 +74,5 @@ export function useGuest() {
     return data && data.status === 'ok' ? data.drinks : []
   }
 
-  return { guestName, confirmed, loading, initGuestName, submitConfirmation, fetchDrinks }
+  return { guestName, confirmed, loading, apiError, initGuestName, submitConfirmation, fetchDrinks }
 }

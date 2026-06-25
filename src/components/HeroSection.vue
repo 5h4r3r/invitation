@@ -9,7 +9,7 @@
         <span v-if="loading" class="hero-guest-name hero-guest-name-loading">
           <span class="hero-name-skeleton"></span>
         </span>
-        <span v-else class="hero-guest-name">{{ guestName }},</span>
+        <span v-else class="hero-guest-name">{{ guestName || 'Гость' }},</span>
         <span class="hero-invite-text">Приглашаем вас на свадьбу</span>
 
         <h1 class="hero-title">
