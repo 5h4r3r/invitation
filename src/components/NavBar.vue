@@ -162,8 +162,8 @@ onUnmounted(() => {
 .nav-mobile {
   display: none;
   flex-direction: column;
-  gap: 12px;
-  padding: 20px 24px;
+  gap: 4px;
+  padding: 16px 24px 24px;
   background: var(--white);
   border-bottom: 1px solid var(--pink);
 }
@@ -178,12 +178,23 @@ onUnmounted(() => {
   font-weight: 500;
   text-decoration: none;
   color: var(--text-dark);
-  padding: 8px 0;
+  padding: 12px 0;
   border-bottom: 1px solid var(--pink);
 }
 
 .nav-mobile a:last-child {
   border-bottom: none;
+}
+
+.nav-mobile .nav-rsvp-link {
+  display: block;
+  text-align: center;
+  margin-top: 8px;
+  background: var(--accent);
+  color: var(--white) !important;
+  border-radius: 12px;
+  padding: 12px !important;
+  font-weight: 600 !important;
 }
 
 @media (min-width: 1280px) {
