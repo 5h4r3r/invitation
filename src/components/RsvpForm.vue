@@ -102,6 +102,8 @@
           <textarea id="wishes" v-model="wishes" placeholder="Ваши пожелания или комментарии..." :disabled="sending" rows="3"></textarea>
         </div>
 
+        <input type="text" v-model="botField" class="honeypot" tabindex="-1" autocomplete="off" />
+
         <button type="submit" class="btn-primary w-full" :disabled="sending || willAttend === null || (willAttend && !drink)">
           {{ sending ? 'Отправка...' : 'Отправить' }}
         </button>
@@ -129,6 +131,8 @@ const drink = ref('')
 const drinks = ref([])
 const transferNeeded = ref(null)
 const wishes = ref('')
+const botField = ref('')
+const formLoadedAt = ref(0)
 const sending = ref(false)
 const error = ref('')
 
@@ -139,6 +143,20 @@ const formRef = ref(null)
 
 async function handleSubmit() {
   error.value = ''
+
+  if (botField.value) {
+    console.log('🤖 Бот: заполнено honeypot-поле')
+    sending.value = false
+    return
+  }
+
+  const elapsed = Date.now() - formLoadedAt.value
+  if (elapsed < 2500) {
+    console.log('🤖 Бот: форма отправлена слишком быстро (' + elapsed + 'ms)')
+    sending.value = false
+    return
+  }
+
   sending.value = true
 
   const submitGuests = willAttend ? guests.value : '0'
@@ -154,6 +172,8 @@ async function handleSubmit() {
 }
 
 onMounted(async () => {
+  formLoadedAt.value = Date.now()
+
   const result = await fetchDrinks()
   if (result.length) {
     drinks.value = result
@@ -198,6 +218,7 @@ onMounted(async () => {
   border-radius: 20px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.1);
   border: 1px solid rgba(242,224,219,0.3);
+  position: relative;
 }
 
 .rsvp-form-intro {
@@ -363,5 +384,14 @@ onMounted(async () => {
   color: var(--text-light);
   font-size: 0.95rem;
   text-align: center;
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  pointer-events: none;
 }
 </style>

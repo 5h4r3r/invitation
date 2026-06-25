@@ -1,0 +1,125 @@
+---
+description: Project requirements and implementation for wedding invitation site
+---
+
+# Свадебное приглашение — Елизавета & Денис
+
+## Стек
+- Vue 3 (Composition API, `<script setup>`) + Vite 6
+- Чистый CSS (scoped), без фреймворков, PostCSS
+- Google Apps Script (бэкенд: авторизация, подтверждение, список напитков)
+- GitHub Pages (CNAME: inv.d-corp.ru)
+
+## Цветовая палитра (CSS-переменные в `src/assets/main.css`)
+
+| Переменная | Значение | Назначение |
+|---|---|---|
+| `--pink` | `#f2e0db` | Розовый фон, бордеры |
+| `--champagne` | `#eddccd` | Шампань/бежевый |
+| `--white` | `#fdf8f5` | Основной фон |
+| `--accent` | `#d4a88e` | Акцент (кнопки, иконки, точка таймлайна) |
+| `--accent-hover` | `#c49378` | Ховер акцента |
+| `--text-dark` | `#3d2c2a` | Основной текст |
+| `--text-light` | `#8a7a72` | Второстепенный текст |
+
+## Шрифты
+- **Montserrat** (основной, без засечек) — обычный/medium/semibold
+- **Playfair Display** (с засечками) — заголовки hero-title, tl-title, logo
+
+## Анимация появления
+- Класс `.fade-in` — `opacity: 0; transform: translateY(30px); transition` на `cubic-bezier(0.16, 1, 0.3, 1)`
+- Класс `.fade-in.visible` — `opacity: 1; transform: translateY(0)`
+- IntersectionObserver в каждом компоненте добавляет `.visible` при пересечении
+- `rootMargin: '0px 0px -50px 0px'`, `threshold: 0.1`
+- У каждого элемента свой `transition-delay` для ступенчатого появления
+
+## Кнопка `.btn-primary`
+- background: var(--accent), цвет текста: белый
+- border-radius: 50px, font-weight: 500
+- hover: background: var(--accent-hover), transform: translateY(-3px)
+- Используется в HeroSection (подтвердить), MapSection, PhotoGallery, RsvpForm
+
+## Guest auth (src/composables/useGuest.js)
+1. Страница открывается с `?code=token` или ранее сохранённым токеном
+2. Если есть `?code=xxx` — запрос к API, ответ сохраняется в localStorage (token, name, confirmed), код убирается из URL (replaceState)
+3. При повторном визите без кода — данные читаются из localStorage, API не вызывается
+4. Новая ссылка с другим кодом перезаписывает localStorage
+5. Если нет ни кода, ни данных — показывает «Гость»
+6. Все ошибки выводятся в консоль на русском с эмодзи, текст ошибки показывается в форме
+
+### API запросы (GET)
+- `?token=xxx` — получить имя гостя
+- `?token=xxx&action=confirm&guests=n&drink=s&transfer=yes/no&wishes=s` — подтверждение
+- `?action=getDrinks` — список напитков
+
+### localStorage ключи
+- `weddingToken` — токен гостя
+- `weddingName` — имя гостя
+- `weddingConfirmed` — true/false
+
+## Google Apps Script (Code.gs)
+- Единая точка: `doGet(e)` → `getGuestData(token)` / `confirmGuest(e)` / `getDrinks()`
+- `getSheet(name, headers)` — получение листа, при отсутствии создаёт с заголовками
+- `json(obj)` — обёртка ContentService
+- Все ошибки — `json({ status: 'error', message: 'текст на русском' })`
+- Подтверждение ОБНОВЛЯЕТ строку гостя в листе «Гости» (не добавляет новую)
+- Таблица: `SPREADSHEET_ID = '1O1uKTDP6wqcsKjgClGBpzgLTBKU3zsH4xXevhF3hu0M'`
+
+### Листы таблицы
+**Гости** (колонки A→G):
+| Токен | Имя | Присутствует | Гостей | Напиток | Трансфер | Пожелания |
+
+**Напитки** (колонка A):
+| Название |
+| Вино, Шампанское, Водка, Не пью |
+
+## Архитектура компонентов (порядок в App.vue)
+
+1. **NavBar** — фиксированный, прозрачный → backdrop-blur при скролле >60px, мобильное гамбургер-меню
+2. **HeroSection** — parallax фон (`/img/ohotnik.jpg`), имя гостя (или скелетон при загрузке, или «Гость»), дата 12.09.2026 Суббота, кнопка CTA, scroll indicator
+3. **LoveStory** — 3 абзаца с задержками 100/200/300ms, фото с повёрнутым розовым подложкой
+4. **DatePlace** — секция с тремя glassmorphism-карточками (дата, место, парковка). Сбор гостей в 14:50. Фон `/img/ohotnik.jpg` с оверлеем, background-attachment: fixed
+5. **MapSection** — две Яндекс.Карты рядом (рядами на мобилке): точка сбора для трансфера и ресторан. URL в Яндекс.Карты
+6. **DressCode** — 4 круга 80/100px с noise overlay, inner ring, палитра: Пудровый/Шампань/Бежевый/Тёмно-зелёный. SVG filter для текстуры
+7. **TimelineSection** — «Программа дня». 6 событий: 14:50-23:00, alternating left/right на десктопе, одна колонка на мобилке. Центральная пунктирная линия
+8. **TimerSection** — обратный отсчёт до 12.09.2026 15:00. 4 glassmorphism-блока (дни/часы/минуты/секунды), обновление каждую секунду
+9. **FaqSection** — аккордеон на градиенте (pink→champagne). 5 вопросов
+10. **MusicPlayer** — `v-if="config.musicPlayer.enabled"`, скрыт (enabled: false)
+11. **PhotoGallery** — `v-if="config.photoGallery.enabled"`, скрыт (enabled: false)
+12. **RsvpForm** — форма подтверждения:
+    - Имя гостя (автоподстановка из токена, без ручного ввода)
+    - «Сможете ли вы присутствовать?» Да/Нет toggle
+    - Если «Да»: кол-во гостей (select 1-4), напиток (из API, select), нужен ли трансфер (Да/Нет toggle)
+    - Пожелания (textarea)
+    - Ошибки API показываются под кнопкой
+    - Кнопка неактивна пока не выбран ответ на присутствие и напиток
+13. **SiteFooter** — сердца, © 2026, контакты организаторов (Татьяна 8 905 850 80 50, Ксения 8 919 565 49 29)
+
+## Конфигурация (src/config.js)
+- `musicPlayer.enabled: false`
+- `photoGallery.enabled: false`
+- При включении — компоненты отображаются, должен быть указан `photoGallery.link`
+
+## Сборка и деплой
+```bash
+$env:PATH = "$env:LOCALAPPDATA\nodejs\node-v22.14.0-win-x64;$env:PATH"
+corepack npm run build    # → dist/
+git add -A && git commit -m "message" && git push origin gh-pages
+```
+
+## Запреты и правила
+- НЕ удалять скрытые компоненты (MusicPlayer, PhotoGallery) — они отключаются флагом в config.js
+- НЕ добавлять внешние CSS-фреймворки — только чистый CSS, scoped per component
+- НЕ показывать FIO input в форме — имя подставляется автоматически из токена
+- НЕ допускать пустой строки в шапке вместо имени — fallback «Гость» или скелетон
+- НЕ создавать лишних листов в таблице — только «Гости» и «Напитки»
+- НЕ добавлять комментарии в код без необходимости
+- НЕ отправлять пустые `?code=` — если код пустой, не делать запрос
+- НЕ удалять стили `.fade-in` из глобального CSS — все компоненты на них завязаны
+- API запросы всегда GET (Google Script не поддерживает POST в режиме web app без CORS)
+
+## Ссылки
+- Сайт: https://inv.d-corp.ru/
+- API: https://script.google.com/macros/s/AKfycbyudnzMYL_NWRoqqelGb6Q8s9BuOhYLxtZsENCL7P_LXqi4veAuj2rKPbZ7TRtNSGqS2w/exec
+- Ресторан «Охотник»: https://kurgan.wed-expert.com/profiles/ohotnik_2
+- Яндекс.Карты venue: `https://yandex.ru/maps/?ll=65.417798%2C55.357972&pt=65.417798%2C55.357972&z=16`
