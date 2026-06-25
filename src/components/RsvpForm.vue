@@ -69,10 +69,8 @@
           <div class="form-group">
             <label for="drink">Предпочтение по алкоголю</label>
             <select id="drink" v-model="drink" :disabled="sending">
-              <option value="wine">Вино</option>
-              <option value="champagne">Шампанское</option>
-              <option value="vodka">Водка</option>
-              <option value="none">Не пью</option>
+              <option value="" disabled>Выберите напиток</option>
+              <option v-for="d in drinks" :key="d" :value="d">{{ d }}</option>
             </select>
           </div>
 
@@ -104,7 +102,7 @@
           <textarea id="wishes" v-model="wishes" placeholder="Ваши пожелания или комментарии..." :disabled="sending" rows="3"></textarea>
         </div>
 
-        <button type="submit" class="btn-primary w-full" :disabled="sending || willAttend === null">
+        <button type="submit" class="btn-primary w-full" :disabled="sending || willAttend === null || (willAttend && !drink)">
           {{ sending ? 'Отправка...' : 'Отправить' }}
         </button>
 
@@ -122,11 +120,12 @@ defineProps({
   guestName: { type: String, default: '' },
 })
 
-const { confirmed, loading, submitConfirmation } = useGuest()
+const { confirmed, loading, submitConfirmation, fetchDrinks } = useGuest()
 
 const willAttend = ref(null)
 const guests = ref('1')
-const drink = ref('wine')
+const drink = ref('')
+const drinks = ref([])
 const transferNeeded = ref(null)
 const wishes = ref('')
 const sending = ref(false)
@@ -142,7 +141,7 @@ async function handleSubmit() {
   sending.value = true
 
   const submitGuests = willAttend ? guests.value : '0'
-  const submitDrink = willAttend ? drink.value : 'none'
+  const submitDrink = willAttend ? drink.value : 'Не пью'
   const submitTransfer = willAttend ? (transferNeeded.value ? 'yes' : 'no') : 'no'
   const submitWishes = wishes.value
 
@@ -153,7 +152,13 @@ async function handleSubmit() {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
+  const result = await fetchDrinks()
+  if (result.length) {
+    drinks.value = result
+    drink.value = result[0]
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {

@@ -59,8 +59,7 @@ export function useGuest() {
     }
     if (!token) return null
 
-    const params = { token, action: 'confirm', guests, drink, transfer }
-    if (wishes) params.wishes = wishes
+    const params = { token, action: 'confirm', guests, drink, transfer, wishes }
 
     const data = await api('GET', params)
     if (data && data.status === 'ok') {
@@ -69,5 +68,10 @@ export function useGuest() {
     return data
   }
 
-  return { guestName, confirmed, loading, initGuestName, submitConfirmation }
+  async function fetchDrinks() {
+    const data = await api('GET', { action: 'getDrinks' })
+    return data && data.status === 'ok' ? data.drinks : []
+  }
+
+  return { guestName, confirmed, loading, initGuestName, submitConfirmation, fetchDrinks }
 }
