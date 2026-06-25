@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbzUR7C9QXTv0rU4_JUrd-k98GFxxtJznFaahOiB0Gb55hewfZdE8WcRnip-0ppte9JU/exec'
+const API_URL = 'https://script.google.com/macros/s/AKfycbyudnzMYL_NWRoqqelGb6Q8s9BuOhYLxtZsENCL7P_LXqi4veAuj2rKPbZ7TRtNSGqS2w/exec'
 
 const guestName = ref('')
 const confirmed = ref(false)
