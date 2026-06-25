@@ -22,7 +22,13 @@
         </a>
       </div>
 
-      <div class="map-wrapper fade-in" ref="mapRef">
+      <div class="map-grid">
+        <div class="map-wrapper fade-in" ref="mapTransferRef">
+          <p class="map-label">Точка сбора для трансфера</p>
+        </div>
+        <div class="map-wrapper fade-in" ref="mapRef">
+          <p class="map-label">Ресторан «Охотник»</p>
+        </div>
       </div>
     </div>
   </section>
@@ -34,6 +40,7 @@ import { ref, onMounted } from 'vue'
 const titleRef = ref(null)
 const infoRef = ref(null)
 const mapRef = ref(null)
+const mapTransferRef = ref(null)
 
 onMounted(() => {
   const observer = new IntersectionObserver((entries) => {
@@ -44,16 +51,21 @@ onMounted(() => {
     })
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' })
 
-  ;[titleRef.value, infoRef.value, mapRef.value].forEach(el => {
+  ;[titleRef.value, infoRef.value, mapRef.value, mapTransferRef.value].forEach(el => {
     if (el) observer.observe(el)
   })
 
-  if (!mapRef.value) return
-  const script = document.createElement('script')
-  script.type = 'text/javascript'
-  script.charset = 'utf-8'
-  script.src = 'https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Af5164dfd684f78eb88a094017f1ad82fc9086f18d1a9449c0444ec59e2b4e898&width=100%25&height=400&lang=ru_RU&scroll=true'
-  mapRef.value.appendChild(script)
+  function loadMap(container, src) {
+    if (!container) return
+    const script = document.createElement('script')
+    script.type = 'text/javascript'
+    script.charset = 'utf-8'
+    script.src = src
+    container.appendChild(script)
+  }
+
+  loadMap(mapRef.value, 'https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Af5164dfd684f78eb88a094017f1ad82fc9086f18d1a9449c0444ec59e2b4e898&width=100%25&height=400&lang=ru_RU&scroll=true')
+  loadMap(mapTransferRef.value, 'https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A93395cdf314d0cda75e31b1ec7ad4e4e841336f5452a65dc483a3d64a503f738&width=100%25&height=400&lang=ru_RU&scroll=true')
 })
 </script>
 
@@ -122,5 +134,35 @@ onMounted(() => {
 
 .map-wrapper :deep(div) {
   width: 100% !important;
+}
+
+.map-label {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-light);
+  padding: 12px 0 0;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.map-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+@media (min-width: 768px) {
+  .map-grid {
+    flex-direction: row;
+  }
+
+  .map-wrapper {
+    flex: 1;
+    min-width: 0;
+  }
 }
 </style>
