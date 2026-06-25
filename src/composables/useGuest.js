@@ -86,15 +86,15 @@ export function useGuest() {
     loading.value = false
   }
 
-  async function submitConfirmation(guests, drink, transfer, wishes, allergy, comment) {
+  async function submitConfirmation(guests, drink, transfer, wishes, allergy) {
     const storedToken = localStorage.getItem('weddingToken')
     if (!storedToken) {
       console.error('❌ Нет токена для отправки подтверждения')
       return { status: 'error', message: 'Ошибка авторизации. Откройте ссылку из приглашения.' }
     }
 
-    const params = { token: storedToken, action: 'confirm', guests, transfer, wishes, drink, allergy, comment }
-    console.log('📤 Отправка подтверждения:', { guests, drink, transfer, wishes, allergy, comment })
+    const params = { token: storedToken, action: 'confirm', guests, transfer, wishes, drink, allergy }
+    console.log('📤 Отправка подтверждения:', { guests, drink, transfer, wishes, allergy })
 
     const data = await api('GET', params)
     if (data && data.status === 'ok') {

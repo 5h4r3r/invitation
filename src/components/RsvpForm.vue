@@ -89,11 +89,6 @@
           </div>
         </template>
 
-        <div class="form-group">
-          <label for="wishes">Пожелания</label>
-          <textarea id="wishes" v-model="wishes" placeholder="Ваши пожелания или комментарии..." :disabled="sending" rows="3"></textarea>
-        </div>
-
         <template v-if="willAttend === true">
           <div class="form-group">
             <label for="drink">Предпочтение по алкоголю</label>
@@ -136,8 +131,8 @@
         </div>
 
         <div class="form-group">
-          <label for="comment">Комментарий</label>
-          <textarea id="comment" v-model="comment" placeholder="Дополнительные комментарии..." :disabled="sending" rows="2"></textarea>
+          <label for="wishes">Пожелания</label>
+          <textarea id="wishes" v-model="wishes" placeholder="Ваши пожелания или комментарии..." :disabled="sending" rows="3"></textarea>
         </div>
 
         <input type="text" v-model="botField" class="honeypot" tabindex="-1" autocomplete="off" />
@@ -171,7 +166,6 @@ const transferNeeded = ref(null)
 const wishes = ref('')
 const hasAllergy = ref(null)
 const allergyInfo = ref('')
-const comment = ref('')
 const botField = ref('')
 const formLoadedAt = ref(0)
 const sending = ref(false)
@@ -205,9 +199,8 @@ async function handleSubmit() {
   const submitTransfer = willAttend ? (transferNeeded.value ? 'yes' : 'no') : 'no'
   const submitWishes = wishes.value
   const submitAllergy = hasAllergy.value ? (hasAllergy.value === true ? (allergyInfo.value || 'Да') : 'Нет') : ''
-  const submitComment = comment.value
 
-  const result = await submitConfirmation(submitGuests, submitDrink, submitTransfer, submitWishes, submitAllergy, submitComment)
+  const result = await submitConfirmation(submitGuests, submitDrink, submitTransfer, submitWishes, submitAllergy)
   sending.value = false
   if (!result || result.status !== 'ok') {
     error.value = result?.message || 'Ошибка при отправке. Попробуйте ещё раз.'
