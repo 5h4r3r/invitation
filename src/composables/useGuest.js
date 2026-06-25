@@ -27,44 +27,66 @@ async function api(method, params) {
 }
 
 export function useGuest() {
+  function restoreFromStorage() {
+    const token = localStorage.getItem('weddingToken')
+    const name = localStorage.getItem('weddingName')
+    const isConfirmed = localStorage.getItem('weddingConfirmed') === 'true'
+    if (token && name) {
+      guestName.value = name
+      confirmed.value = isConfirmed
+      return token
+    }
+    return null
+  }
+
+  function saveToStorage(token, name, isConfirmed) {
+    localStorage.setItem('weddingToken', token || '')
+    localStorage.setItem('weddingName', name || '')
+    localStorage.setItem('weddingConfirmed', isConfirmed ? 'true' : 'false')
+  }
+
   async function initGuestName() {
     apiError.value = ''
+
     const urlParams = new URLSearchParams(window.location.search)
-    let token = urlParams.get('code')
-    if (!token) {
-      token = localStorage.getItem('weddingToken')
-    }
-    if (token) {
-      localStorage.setItem('weddingToken', token)
-      if (urlParams.has('code')) {
-        urlParams.delete('code')
-        const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '')
-        window.history.replaceState({}, document.title, newUrl)
-      }
-      const data = await api('GET', { token })
+    const urlToken = urlParams.get('code')
+
+    if (urlToken) {
+      // Новый код в URL — загружаем с сервера, перезаписываем storage
+      localStorage.setItem('weddingToken', urlToken)
+      urlParams.delete('code')
+      const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '')
+      window.history.replaceState({}, document.title, newUrl)
+
+      const data = await api('GET', { token: urlToken })
       if (data && data.status === 'ok') {
         guestName.value = data.name || ''
         confirmed.value = data.confirmed === true
+        saveToStorage(urlToken, guestName.value, confirmed.value)
       } else {
         apiError.value = data?.message || 'API error'
       }
+    } else {
+      // Нет кода в URL — пробуем storage
+      const storedToken = restoreFromStorage()
+      if (!storedToken) {
+        guestName.value = ''
+      }
     }
+
     loading.value = false
   }
 
   async function submitConfirmation(guests, drink, transfer, wishes) {
-    const urlParams = new URLSearchParams(window.location.search)
-    let token = urlParams.get('code')
-    if (!token) {
-      token = localStorage.getItem('weddingToken')
-    }
-    if (!token) return null
+    const storedToken = localStorage.getItem('weddingToken')
+    if (!storedToken) return null
 
-    const params = { token, action: 'confirm', guests, drink, transfer, wishes }
+    const params = { token: storedToken, action: 'confirm', guests, drink, transfer, wishes }
 
     const data = await api('GET', params)
     if (data && data.status === 'ok') {
       confirmed.value = true
+      saveToStorage(storedToken, guestName.value, true)
     }
     return data
   }
