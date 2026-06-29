@@ -96,7 +96,7 @@ export function useGuest() {
     const params = { token: storedToken, action: 'confirm', guests, transfer, wishes, drink, allergy }
     console.log('📤 Отправка подтверждения:', { guests, drink, transfer, wishes, allergy })
 
-    const data = await api('POST', params)
+    const data = await api('GET', params)
     if (data && data.status === 'ok') {
       console.log('✅ Подтверждение сохранено')
       confirmed.value = true
