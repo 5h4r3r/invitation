@@ -1,0 +1,25 @@
+schema: spec-driven
+language: ru
+
+context: |
+  Vue 3 + Vite сайт-приглашение на свадьбу для Елизаветы & Дениса, задеплоен на GitHub Pages (inv.d-corp.ru)
+  Стек: Vue 3 (Composition API, <script setup>), Vite, чистый CSS (без фреймворков), scoped-стили
+  Бэкенд: Google Apps Script (единственная функция doGet, без внешних зависимостей)
+  Хостинг: GitHub Pages с CNAME
+  Иконки: Inline SVG (без библиотек иконок)
+  Шрифты: Google Fonts — Playfair Display (заголовки), Montserrat (основной текст)
+  Анимации: CSS fade-in с IntersectionObserver (порог 0.1, rootMargin 0 0 -50px 0)
+  Хранилище: localStorage (ключи: weddingToken, weddingName, weddingConfirmed)
+  Защита от ботов: honeypot + временна́я метка (минимум 2500мс)
+  Язык интерфейса: русский (UI, ошибки API, сообщения в консоль)
+
+rules:
+  specs:
+    - Использовать формат ДАНО/КОГДА/ТОГДА для сценариев
+    - Организовывать specs по доменам (auth, rsvp, ui, backend, infra)
+  proposal:
+    - Краткость — не более 500 слов
+    - Всегда включать разделы: Цель, Область применения, Подход
+  tasks:
+    - Разбивать задачи на реализуемые части
+    - Добавлять префикс домена, например [auth], [rsvp], [ui]

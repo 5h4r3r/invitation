@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbyRDM7ssSe1ufCUXpwtXOgev4z-GfZ-beifhlst8gUULHs8LJrAuGFD_rahm1VKJHptAQ/exec'
+const API_URL = 'https://script.google.com/macros/s/AKfycby7yLBdv3d-vNaVUOowpTydQgSphBk6wbUBZymZICIg_Sj4h5L6nxDZFm5kO_1eZ2ShgA/exec'
 
 const guestName = ref('')
 const confirmed = ref(false)
@@ -96,7 +96,7 @@ export function useGuest() {
     const params = { token: storedToken, action: 'confirm', guests, transfer, wishes, drink, allergy }
     console.log('📤 Отправка подтверждения:', { guests, drink, transfer, wishes, allergy })
 
-    const data = await api('GET', params)
+    const data = await api('POST', params)
     if (data && data.status === 'ok') {
       console.log('✅ Подтверждение сохранено')
       confirmed.value = true
