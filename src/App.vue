@@ -6,7 +6,6 @@
   <TimelineSection />
   <MapSection />
   <DressCode />
-  <TimerSection />
   <FaqSection />
   <MusicPlayer
     v-if="config.musicPlayer.enabled"
@@ -17,6 +16,7 @@
     v-if="config.photoGallery.enabled"
     :link="config.photoGallery.link"
   />
+  <TimerSection />
   <RsvpForm :guestName="guestName" />
   <SiteFooter />
 </template>
