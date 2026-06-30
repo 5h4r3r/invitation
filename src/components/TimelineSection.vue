@@ -77,7 +77,7 @@ onMounted(() => {
 
 <style scoped>
 .timeline {
-  background: var(--white);
+  background: #E4D2AF;
 }
 
 .tl-container {

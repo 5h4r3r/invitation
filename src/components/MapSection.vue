@@ -60,7 +60,7 @@ onMounted(() => {
 
 <style scoped>
 .map-section {
-  background: var(--white);
+  background: #DDE0E9;
 }
 
 .map-info {

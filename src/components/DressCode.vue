@@ -71,7 +71,7 @@ onMounted(() => {
 
 <style scoped>
 .dress-code {
-  background: var(--white);
+  background: #F2D9DF;
   text-align: center;
   position: relative;
 }
