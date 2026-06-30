@@ -115,14 +115,14 @@ onMounted(() => {
 .dc-row {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 24px;
 }
 
 .dc-row-label {
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--text-light);
-  min-width: 80px;
+  min-width: 120px;
   text-align: right;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -179,7 +179,7 @@ onMounted(() => {
 
   .dc-row-label {
     font-size: 0.8rem;
-    min-width: 100px;
+    min-width: 140px;
     line-height: 48px;
   }
 
