@@ -3,9 +3,9 @@
   <HeroSection :guestName="guestName" :loading="loading" />
   <LoveStory />
   <DatePlace />
+  <TimelineSection />
   <MapSection />
   <DressCode />
-  <TimelineSection />
   <TimerSection />
   <FaqSection />
   <MusicPlayer
