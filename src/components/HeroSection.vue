@@ -84,7 +84,7 @@ onUnmounted(() => {
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url('/img/ohotnik.jpg') center 30% / cover no-repeat;
+  background: url('/img/canvas6.png') center 30% / cover no-repeat;
   transition: transform 0.075s ease-out;
   will-change: transform;
 }

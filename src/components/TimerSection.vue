@@ -51,7 +51,7 @@ onMounted(() => {
 <style scoped>
 .timer {
   position: relative;
-  background: url('/img/canvas6.png') center center / cover no-repeat;
+  background: url('/img/ohotnik.jpg') center center / cover no-repeat;
   background-attachment: fixed;
   padding: 96px 20px;
   text-align: center;
