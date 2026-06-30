@@ -67,7 +67,7 @@ onMounted(() => {
 <style scoped>
 .date-place {
   position: relative;
-  background: url('/img/ohotnik.jpg') center center / cover no-repeat;
+  background: url('/img/canvas.png') center center / cover no-repeat;
   background-attachment: fixed;
   padding: 96px 20px;
 }
