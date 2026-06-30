@@ -98,7 +98,6 @@ onMounted(() => {
 }
 
 .dc-note {
-  font-style: italic;
   color: var(--text-light);
   opacity: 0.8;
 }
@@ -128,12 +127,14 @@ onMounted(() => {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   flex-shrink: 0;
+  line-height: 40px;
 }
 
 .dc-row-colors {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .dc-swatch {
@@ -179,6 +180,7 @@ onMounted(() => {
   .dc-row-label {
     font-size: 0.8rem;
     min-width: 100px;
+    line-height: 48px;
   }
 
   .dc-row-colors {
