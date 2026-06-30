@@ -2,7 +2,7 @@
   <section class="timer" id="timer">
     <div class="container">
       <div class="fade-in" ref="titleRef">
-        <h2 class="section-title">До торжества осталось</h2>
+        <h2 class="section-title" style="color: var(--white);">До торжества осталось</h2>
       </div>
 
       <div class="timer-grid fade-in" ref="timerRef">
@@ -50,14 +50,27 @@ onMounted(() => {
 
 <style scoped>
 .timer {
-  background: var(--accent);
-  color: var(--white);
+  position: relative;
+  background: url('/img/ohotnik.jpg') center center / cover no-repeat;
+  background-attachment: fixed;
+  padding: 96px 20px;
   text-align: center;
-  padding: 80px 20px;
+  color: var(--white);
 }
 
-.timer :deep(.section-title) {
-  color: var(--white);
+.timer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.timer .container {
+  position: relative;
+  z-index: 1;
 }
 
 .timer :deep(.section-title::after) {
@@ -77,22 +90,27 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 110px;
-  height: 120px;
-  background: rgba(255,255,255,0.1);
+  width: 130px;
+  height: 130px;
+  background: rgba(0,0,0,0.3);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border-radius: 16px;
   border: 1px solid rgba(255,255,255,0.1);
-  padding: 8px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timer-block:hover {
+  transform: scale(1.05);
 }
 
 .timer-num {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   font-weight: 700;
   font-family: 'Playfair Display', serif;
   line-height: 1;
+  color: var(--white);
 }
 
 .timer-label {
@@ -102,15 +120,16 @@ onMounted(() => {
   letter-spacing: 2px;
   margin-top: 8px;
   font-weight: 500;
+  color: var(--white);
 }
 
 @media (max-width: 768px) {
   .timer-block {
-    width: 80px;
+    width: 90px;
     height: 90px;
   }
   .timer-num {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 }
 </style>
