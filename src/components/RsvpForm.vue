@@ -233,7 +233,7 @@ onMounted(async () => {
 
 <style scoped>
 .rsvp {
-  background: linear-gradient(135deg, #EDE1ED 0%, #E6CFE9 100%);
+  background: linear-gradient(135deg, var(--pink) 0%, var(--champagne) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
