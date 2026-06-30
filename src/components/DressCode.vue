@@ -18,17 +18,21 @@
       </div>
 
       <div class="dc-text fade-in" ref="descRef">
-        <p>Мы очень ценим вашу поддержку в создании гармоничной атмосферы нашего праздника. Будем искренне рады, если при выборе праздничного наряда вы отдадите предпочтение палитре оттенков нашей свадьбы:</p>
-        <p class="dc-note">Для дам приветствуются коктейльные и вечерние платья, для джентльменов — классические костюмы или элегантный casual.</p>
+        <p>Мы очень ценим вашу поддержку в создании гармоничной атмосферы нашего праздника. Будем искренне рады видеть джентльменов в рубашках белого цвета, дам — в приглушённых образах пастельных тонов.</p>
+        <p class="dc-note">Ниже представлена палитра цветов нашей свадьбы для вдохновения:</p>
       </div>
 
-      <div class="dc-colors fade-in" ref="paletteRef">
-        <div class="dc-swatch" v-for="c in colors" :key="c.name">
-          <div class="dc-circle" :style="{ background: c.gradient }">
-            <div class="dc-circle-noise"></div>
-            <div class="dc-circle-ring"></div>
+      <div class="dc-palette fade-in" ref="paletteRef">
+        <div class="dc-row" v-for="(group, gi) in palette" :key="gi">
+          <span class="dc-row-label">{{ group.family }}</span>
+          <div class="dc-row-colors">
+            <div class="dc-swatch" v-for="(hex, ci) in group.colors" :key="ci">
+              <div class="dc-circle" :style="{ background: hex }">
+                <div class="dc-circle-noise"></div>
+                <div class="dc-circle-ring"></div>
+              </div>
+            </div>
           </div>
-          <span class="dc-name">{{ c.name }}</span>
         </div>
       </div>
     </div>
@@ -42,11 +46,12 @@ const titleRef = ref(null)
 const descRef = ref(null)
 const paletteRef = ref(null)
 
-const colors = [
-  { name: 'Пудровый', gradient: 'linear-gradient(135deg, #f8e1e4, #e8c4c8)' },
-  { name: 'Шампань', gradient: 'linear-gradient(135deg, #f7e7ce, #e8d5b8)' },
-  { name: 'Бежевый', gradient: 'linear-gradient(135deg, #d4c4b0, #c4b4a0)' },
-  { name: 'Тёмно-зелёный', gradient: 'linear-gradient(135deg, #4a6741, #3d5636)' },
+const palette = [
+  { family: 'Зелёные', colors: ['#799386', '#A0C3AB', '#98A997', '#C0CDC4', '#C4D9CA', '#E1EFE2'] },
+  { family: 'Песочные', colors: ['#B6894D', '#D9A45E', '#E6BA7B', '#F7CB95', '#E4D2AF', '#F2E3CC'] },
+  { family: 'Розовые', colors: ['#B47D83', '#D19B9E', '#DEB4BA', '#F2CBD0', '#F2D9DF', '#F6E7EE'] },
+  { family: 'Лиловые', colors: ['#9A7A8F', '#B393A8', '#D8B0CB', '#E7CBE1', '#E6CFE9', '#EDE1ED'] },
+  { family: 'Серо-голубые', colors: ['#767A93', '#9CA8C2', '#9A9EA9', '#C4CBD3', '#CBCFD8', '#DDE0E9'] },
 ]
 
 onMounted(() => {
@@ -98,44 +103,61 @@ onMounted(() => {
   opacity: 0.8;
 }
 
-.dc-colors {
+.dc-palette {
   display: flex;
-  flex-wrap: wrap;
-  gap: 32px;
-  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dc-row {
+  display: flex;
   align-items: center;
-  margin-top: 24px;
+  gap: 16px;
+}
+
+.dc-row-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-light);
+  min-width: 80px;
+  text-align: right;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.dc-row-colors {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .dc-swatch {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
   cursor: default;
 }
 
 .dc-swatch:hover .dc-circle {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 .dc-circle {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   overflow: hidden;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dc-circle-noise {
   position: absolute;
   inset: 0;
-  opacity: 0.2;
+  opacity: 0.15;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   pointer-events: none;
@@ -143,21 +165,24 @@ onMounted(() => {
 
 .dc-circle-ring {
   position: absolute;
-  inset: 4px;
+  inset: 3px;
   border: 1px solid rgba(255,255,255,0.2);
   border-radius: 50%;
 }
 
-.dc-name {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--text-dark);
-}
-
 @media (min-width: 768px) {
   .dc-circle {
-    width: 100px;
-    height: 100px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .dc-row-label {
+    font-size: 0.8rem;
+    min-width: 100px;
+  }
+
+  .dc-row-colors {
+    gap: 12px;
   }
 }
 </style>

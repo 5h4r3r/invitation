@@ -18,7 +18,7 @@
 
       <form v-else class="rsvp-card rsvp-form" ref="formRef" @submit.prevent="handleSubmit">
         <div class="rsvp-form-intro">
-          <p>Пожалуйста, заполните форму ниже</p>
+          <p>Пожалуйста, подтвердите присутствие до 1 августа 2026 года</p>
         </div>
 
         <div class="form-group">
@@ -63,6 +63,7 @@
               <option value="2">2 гостя</option>
               <option value="3">3 гостя</option>
               <option value="4">4 гостя</option>
+              <option value="5">5 гостей</option>
             </select>
           </div>
 

@@ -129,11 +129,11 @@ onUnmounted(() => {
 
 .hero-guest-name {
   display: block;
-  font-size: 1.3rem;
-  font-weight: 300;
-  color: rgba(255,255,255,0.9);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.95);
   letter-spacing: 0.02em;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -154,11 +154,11 @@ onUnmounted(() => {
 }
 
 .hero-invite-text {
-  font-size: 0.75rem;
+  font-size: 1rem;
   text-transform: uppercase;
-  letter-spacing: 0.3em;
-  color: rgba(255,255,255,0.8);
-  margin-bottom: 8px;
+  letter-spacing: 0.25em;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 12px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
 }

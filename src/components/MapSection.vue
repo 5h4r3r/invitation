@@ -7,24 +7,13 @@
 
       <div class="map-info fade-in" ref="infoRef">
         <p>Ресторан «Охотник» находится по адресу: <strong>Курганская обл., д. Лукино, пер. Тайный, 7</strong>.</p>
-        <p class="map-hint">Вы можете добраться на личном автомобиле или такси. Для гостей будет организован трансфер.</p>
-        <a
-          class="map-button"
-          href="https://yandex.ru/maps/?ll=65.417798%2C55.357972&pt=65.417798%2C55.357972&z=16"
-          target="_blank"
-          rel="noopener"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-            <circle cx="12" cy="10" r="3"/>
-          </svg>
-          Открыть в Яндекс.Картах
-        </a>
+        <p>Для гостей будет организован трансфер от <strong>парковки у ТРЦ «Воробьёвы Горы»</strong>.</p>
+        <p class="map-hint">Сбор гостей в 14:30. Вы также можете добраться на личном автомобиле или такси.</p>
       </div>
 
       <div class="map-grid">
         <div class="map-wrapper fade-in" ref="mapTransferRef">
-          <p class="map-label">Точка сбора для трансфера</p>
+          <p class="map-label">Парковка у Воробьёвых Гор</p>
         </div>
         <div class="map-wrapper fade-in" ref="mapRef">
           <p class="map-label">Ресторан «Охотник»</p>
