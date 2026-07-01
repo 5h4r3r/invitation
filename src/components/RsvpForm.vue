@@ -506,12 +506,13 @@ onMounted(async () => {
 
 .drink-grid {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 10px;
 }
 
 .drink-btn {
-  padding: 10px 18px;
+  width: 100%;
+  padding: 12px 18px;
   border: 2px solid var(--pink);
   border-radius: 10px;
   background: var(--white);
