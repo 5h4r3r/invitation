@@ -43,4 +43,4 @@
 `token`, `action=confirm`, `attending`, `guests`, `drink`, `transfer`, `wishes`, `allergy`
 
 ## URL бэкенда (текущий)
-`AKfycby6R-7TPXLQUyhZ9XCHG_vgaZvOEJboWGvJJ_2COIL97pyA5pZbK0kzr5Q0y3Ynzc6cww/exec`
+`AKfycbwzEQoXSM4kiOzkR29knUgVzCneo9UK9WlcFDtBm8mAfLt_DxZVBz3uoKJ371hbpONSZA/exec`

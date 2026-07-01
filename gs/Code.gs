@@ -57,8 +57,9 @@ function doPost(e) {
   if (!['Да', 'Нет'].includes(params.attending)) {
     return json({ status: 'error', message: 'Некорректное значение присутствия' });
   }
+  var guests;
   if (params.attending === 'Да') {
-    const guests = parseInt(params.guests);
+    guests = parseInt(params.guests);
     if (isNaN(guests) || guests < 0 || guests > 4) {
       return json({ status: 'error', message: 'Некорректное количество гостей' });
     }
@@ -68,6 +69,8 @@ function doPost(e) {
     if (!['Да', 'Нет'].includes(params.transfer)) {
       return json({ status: 'error', message: 'Некорректное значение трансфера' });
     }
+  } else {
+    guests = 0;
   }
 
   const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
@@ -81,8 +84,8 @@ function doPost(e) {
     if (data[i][0] === token) {
       sheet.getRange(i + 1, 3).setValue(params.attending); // C: Присутствует
       sheet.getRange(i + 1, 4).setValue(guests);           // D: Гостей
-      sheet.getRange(i + 1, 5).setValue(params.transfer);  // E: Трансфер
-      sheet.getRange(i + 1, 6).setValue(params.drink);     // F: Напиток
+      sheet.getRange(i + 1, 5).setValue(params.transfer || 'Нет');  // E: Трансфер
+      sheet.getRange(i + 1, 6).setValue(params.drink || 'Не пью');  // F: Напиток
       sheet.getRange(i + 1, 7).setValue(params.allergy || '');  // G: Аллергия
       sheet.getRange(i + 1, 8).setValue(params.wishes || '');   // H: Пожелания
       return json({ status: 'ok', message: 'confirmed' });
