@@ -26,7 +26,7 @@
           <p class="form-guest-name">{{ guestName || 'Гость' }}</p>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" :class="{ 'form-group-invalid': submitted && willAttend === null }">
           <label>Сможете ли вы присутствовать?</label>
           <div class="rsvp-toggle">
             <button
@@ -56,7 +56,7 @@
         </div>
 
         <template v-if="willAttend === true">
-          <div class="form-group">
+          <div class="form-group" :class="{ 'form-group-invalid': submitted && guests === '' }">
             <label for="guests">Количество гостей</label>
             <select id="guests" v-model="guests" :disabled="sending">
               <option value="" disabled>Не выбрано</option>
@@ -68,7 +68,7 @@
             </select>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" :class="{ 'form-group-invalid': submitted && transferNeeded === null }">
             <label>Нужен ли трансфер?</label>
             <div class="rsvp-toggle rsvp-toggle-row">
               <button
@@ -92,7 +92,7 @@
         </template>
 
         <template v-if="willAttend === true">
-          <div class="form-group">
+          <div class="form-group" :class="{ 'form-group-invalid': submitted && drink === '' }">
             <label for="drink">Предпочтение по алкоголю</label>
             <select id="drink" v-model="drink" :disabled="sending">
               <option value="" disabled>Выберите напиток</option>
@@ -100,7 +100,7 @@
             </select>
           </div>
 
-            <div class="form-group">
+            <div class="form-group" :class="{ 'form-group-invalid': submitted && hasAllergy === null }">
               <label>Есть ли аллергия?</label>
               <div class="rsvp-toggle rsvp-toggle-row">
                 <button
@@ -139,7 +139,9 @@
 
         <input type="text" v-model="botField" class="honeypot" tabindex="-1" autocomplete="off" />
 
-        <button type="submit" class="btn-primary w-full" :disabled="sending || !canSubmit">
+        <p v-if="validationError" class="form-validation-error">{{ validationError }}</p>
+
+        <button type="submit" class="btn-primary w-full" :disabled="sending">
           {{ sending ? 'Отправка...' : 'Отправить' }}
         </button>
 
@@ -151,7 +153,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useGuest } from '../composables/useGuest'
 
 defineProps({
@@ -172,15 +174,8 @@ const botField = ref('')
 const formLoadedAt = ref(0)
 const sending = ref(false)
 const error = ref('')
-
-const canSubmit = computed(() => {
-  if (willAttend.value === null) return false
-  if (willAttend.value === false) return true
-  return guests.value !== ''
-    && transferNeeded.value !== null
-    && drink.value !== ''
-    && hasAllergy.value !== null
-})
+const submitted = ref(false)
+const validationError = ref('')
 
 const titleRef = ref(null)
 const loadingRef = ref(null)
@@ -189,18 +184,31 @@ const formRef = ref(null)
 
 async function handleSubmit() {
   error.value = ''
+  validationError.value = ''
 
   if (botField.value) {
     console.log('🤖 Бот: заполнено honeypot-поле')
-    sending.value = false
     return
   }
 
   const elapsed = Date.now() - formLoadedAt.value
   if (elapsed < 2500) {
     console.log('🤖 Бот: форма отправлена слишком быстро (' + elapsed + 'ms)')
-    sending.value = false
     return
+  }
+
+  submitted.value = true
+
+  if (willAttend.value === null) {
+    validationError.value = 'Выберите, сможете ли вы присутствовать'
+    return
+  }
+
+  if (willAttend.value === true) {
+    if (guests.value === '' || transferNeeded.value === null || drink.value === '' || hasAllergy.value === null) {
+      validationError.value = 'Заполните все обязательные поля'
+      return
+    }
   }
 
   sending.value = true
@@ -360,6 +368,26 @@ onMounted(async () => {
   text-align: center;
   margin-top: 15px;
   font-size: 0.9rem;
+}
+
+.form-validation-error {
+  color: #d32f2f;
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.form-group-invalid select,
+.form-group-invalid input,
+.form-group-invalid textarea {
+  border-color: #d32f2f;
+}
+
+.form-group-invalid .rsvp-toggle-btn {
+  border-color: #d32f2f;
 }
 
 /* Toggle buttons */
