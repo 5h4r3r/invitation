@@ -92,12 +92,21 @@
         </template>
 
         <template v-if="willAttend === true">
-          <div class="form-group" :class="{ 'form-group-invalid': submitted && drink === '' }">
-            <label for="drink">Предпочтение по алкоголю</label>
-            <select id="drink" v-model="drink" :disabled="sending">
-              <option value="" disabled>Выберите напиток</option>
-              <option v-for="d in drinks" :key="d" :value="d">{{ d }}</option>
-            </select>
+          <div class="form-group" :class="{ 'form-group-invalid': submitted && drink.length === 0 }">
+            <label>Предпочтение по алкоголю <span class="form-hint">(можно выбрать несколько)</span></label>
+            <div class="drink-grid">
+              <button
+                type="button"
+                v-for="d in drinks"
+                :key="d"
+                class="drink-btn"
+                :class="{ active: drink.includes(d) }"
+                @click="toggleDrink(d)"
+                :disabled="sending"
+              >
+                {{ d }}
+              </button>
+            </div>
           </div>
 
             <div class="form-group" :class="{ 'form-group-invalid': submitted && hasAllergy === null }">
@@ -164,7 +173,7 @@ const { confirmed, loading, apiError, submitConfirmation, fetchDrinks } = useGue
 
 const willAttend = ref(null)
 const guests = ref('')
-const drink = ref('')
+const drink = ref([])
 const drinks = ref([])
 const transferNeeded = ref(null)
 const wishes = ref('')
@@ -176,6 +185,23 @@ const sending = ref(false)
 const error = ref('')
 const submitted = ref(false)
 const validationError = ref('')
+
+function toggleDrink(d) {
+  if (d === 'Не пью') {
+    drink.value = drink.value.includes('Не пью') ? [] : ['Не пью']
+    return
+  }
+  if (drink.value.includes('Не пью')) {
+    drink.value = [d]
+    return
+  }
+  const idx = drink.value.indexOf(d)
+  if (idx === -1) {
+    drink.value = [...drink.value, d]
+  } else {
+    drink.value = drink.value.filter(x => x !== d)
+  }
+}
 
 const titleRef = ref(null)
 const loadingRef = ref(null)
@@ -213,7 +239,7 @@ async function handleSubmit() {
       validationError.value = 'Выберите, нужен ли трансфер'
       return
     }
-    if (drink.value === '') {
+    if (drink.value.length === 0) {
       validationError.value = 'Выберите предпочтение по алкоголю'
       return
     }
@@ -227,7 +253,7 @@ async function handleSubmit() {
 
   const submitAttending = willAttend.value ? 'Да' : 'Нет'
   const submitGuests = willAttend.value ? guests.value : '0'
-  const submitDrink = willAttend.value ? drink.value : 'Не пью'
+  const submitDrink = willAttend.value ? drink.value.join(', ') : 'Не пью'
   const submitTransfer = willAttend.value ? (transferNeeded.value ? 'Да' : 'Нет') : 'Нет'
   const submitWishes = wishes.value
   const submitAllergy = hasAllergy.value ? (hasAllergy.value === true ? (allergyInfo.value || 'Да') : 'Нет') : ''
@@ -476,6 +502,47 @@ onMounted(async () => {
 
 .rsvp .section-title::after {
   background: var(--accent);
+}
+
+.drink-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.drink-btn {
+  padding: 10px 18px;
+  border: 2px solid var(--pink);
+  border-radius: 10px;
+  background: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.drink-btn:hover {
+  border-color: var(--accent);
+  background: rgba(242, 224, 219, 0.2);
+}
+
+.drink-btn.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--white);
+}
+
+.drink-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-hint {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-light);
 }
 
 .honeypot {
