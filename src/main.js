@@ -3,4 +3,4 @@ import App from './App.vue'
 import './assets/main.css'
 
 createApp(App).mount('#app')
-console.log('v5.1')
+console.log('v6')
