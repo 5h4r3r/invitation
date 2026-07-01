@@ -111,7 +111,7 @@ onUnmounted(() => {
   position: relative;
   z-index: 20;
   text-align: center;
-  padding: 0 20px;
+  padding: 60px 20px 0;
   max-width: 56rem;
   margin: 0 auto;
   display: flex;
@@ -261,6 +261,124 @@ onUnmounted(() => {
   }
   .hero-date {
     font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero {
+    min-height: 100vh;
+  }
+
+  .hero-content {
+    padding-top: 56px;
+  }
+
+  .hero-guest-name {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .hero-invite-text {
+    font-size: 0.75rem;
+    margin-bottom: 6px;
+    letter-spacing: 0.2em;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+    margin: 8px 0;
+  }
+
+  .hero-ampersand {
+    font-size: 1.5rem;
+    margin: 2px 0;
+  }
+
+  .hero-date-block {
+    margin-top: 12px;
+  }
+
+  .hero-divider {
+    width: 56px;
+    margin: 4px 0;
+  }
+
+  .hero-date {
+    font-size: 0.9rem;
+  }
+
+  .hero-day {
+    font-size: 0.75rem;
+  }
+
+  .hero-cta-wrapper {
+    margin-top: 16px;
+  }
+
+  .hero-cta-wrapper .btn-primary {
+    padding: 10px 24px;
+    font-size: 0.85rem;
+  }
+
+  .hero-scroll-indicator {
+    bottom: 16px;
+  }
+
+  .hero-scroll-indicator span {
+    font-size: 0.5rem;
+  }
+
+  .hero-scroll-line {
+    width: 3px;
+    height: 16px;
+  }
+}
+
+@media (max-height: 700px) {
+  .hero-title {
+    font-size: 2.5rem;
+    margin: 6px 0;
+  }
+
+  .hero-ampersand {
+    font-size: 1.75rem;
+    margin: 2px 0;
+  }
+
+  .hero-date-block {
+    margin-top: 12px;
+  }
+
+  .hero-divider {
+    width: 64px;
+    margin: 4px 0;
+  }
+
+  .hero-cta-wrapper {
+    margin-top: 16px;
+  }
+
+  .hero-cta-wrapper .btn-primary {
+    padding: 10px 28px;
+    font-size: 0.9rem;
+  }
+
+  .hero-guest-name {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+
+  .hero-invite-text {
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+  }
+
+  .hero-scroll-indicator {
+    bottom: 20px;
+  }
+
+  .hero-scroll-line {
+    height: 20px;
   }
 }
 </style>
