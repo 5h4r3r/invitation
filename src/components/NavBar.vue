@@ -12,7 +12,7 @@
         <a href="#dress-code">Дресс-код</a>
         <a href="#faq">Вопросы</a>
         <a href="#music" v-if="config.musicPlayer.enabled">Музыка</a>
-        <a href="#rsvp" class="nav-rsvp-link">Подтвердить присутствие</a>
+        <a href="#rsvp" class="nav-rsvp-link">Подтвердить</a>
       </div>
       <button class="nav-toggle" @click="mobileOpen = !mobileOpen" aria-label="Меню">
         <span></span><span></span><span></span>
@@ -26,7 +26,7 @@
       <a href="#dress-code" @click="mobileOpen = false">Дресс-код</a>
       <a href="#faq" @click="mobileOpen = false">Вопросы</a>
       <a href="#music" @click="mobileOpen = false" v-if="config.musicPlayer.enabled">Музыка</a>
-      <a href="#rsvp" @click="mobileOpen = false" class="nav-rsvp-link">Подтвердить присутствие</a>
+      <a href="#rsvp" @click="mobileOpen = false" class="nav-rsvp-link">Подтвердить</a>
     </div>
   </nav>
 </template>
