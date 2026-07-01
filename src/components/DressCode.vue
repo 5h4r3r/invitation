@@ -137,6 +137,14 @@ onMounted(() => {
   align-items: center;
 }
 
+@media (max-width: 560px) {
+  .dc-row-colors {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 10px;
+  }
+}
+
 .dc-swatch {
   cursor: default;
 }
