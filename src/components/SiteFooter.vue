@@ -10,8 +10,8 @@
         можете обратиться к нашим организаторам:
       </p>
       <div class="footer-phones">
-        <a href="tel:+79058508050">8 905 850 80 50 Татьяна</a>
-        <a href="tel:+79195654929">8 919 565 49 29 Ксения</a>
+        <a href="tel:+79058508050">+7 (905) 850-80-50 Татьяна</a>
+        <a href="tel:+79195654929">+7 (919) 565-49-29 Ксения</a>
       </div>
     </div>
   </footer>
@@ -53,8 +53,10 @@ footer {
 
 .footer-phones {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
   margin-top: 16px;
 }
 
