@@ -32,10 +32,16 @@ URL API: `https://script.google.com/macros/s/AKfycby6R-7TPXLQUyhZ9XCHG_vgaZvOEJb
 ### Requirement: Подтверждение присутствия через POST
 Система MUST принимать подтверждение присутствия только через HTTP POST. GET-запросы с `action=confirm` ОТКЛОНЯЮТСЯ.
 
-#### Scenario: Подтверждение через POST
-- ДАНО POST-запрос с параметрами `token=abc123&action=confirm&guests=2&drink=Вино&transfer=yes&wishes=...&allergy=...`
+#### Scenario: Подтверждение через POST (гость идёт)
+- ДАНО POST-запрос с параметрами `token=abc123&action=confirm&attending=Да&guests=2&drink=Вино&transfer=Да&wishes=...&allergy=Нет`
 - КОГДА токен найден в листе «Гости»
-- ТОГДА обновляются колонки C (Присутствует='yes'), D (Гостей), E (Трансфер), F (Напиток), G (Аллергия), H (Пожелания)
+- ТОГДА обновляются колонки C (Присутствует='Да'), D (Гостей), E (Трансфер), F (Напиток), G (Аллергия), H (Пожелания)
+- И API возвращает `{ status: 'ok', message: 'confirmed' }`
+
+#### Scenario: Подтверждение через POST (гость не идёт)
+- ДАНО POST-запрос с параметрами `token=abc123&action=confirm&attending=Нет&guests=0&drink=Не пью&transfer=Нет&wishes=...&allergy=`
+- КОГДА токен найден в листе «Гости»
+- ТОГДА обновляется колонка C (Присутствует='Нет'), остальные не меняются
 - И API возвращает `{ status: 'ok', message: 'confirmed' }`
 
 #### Scenario: GET-запрос отклонён

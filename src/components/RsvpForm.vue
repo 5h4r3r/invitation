@@ -205,13 +205,14 @@ async function handleSubmit() {
 
   sending.value = true
 
+  const submitAttending = willAttend ? 'Да' : 'Нет'
   const submitGuests = willAttend ? guests.value : '0'
   const submitDrink = willAttend ? drink.value : 'Не пью'
   const submitTransfer = willAttend ? (transferNeeded.value ? 'Да' : 'Нет') : 'Нет'
   const submitWishes = wishes.value
   const submitAllergy = hasAllergy.value ? (hasAllergy.value === true ? (allergyInfo.value || 'Да') : 'Нет') : ''
 
-  const result = await submitConfirmation(submitGuests, submitDrink, submitTransfer, submitWishes, submitAllergy)
+  const result = await submitConfirmation(submitAttending, submitGuests, submitDrink, submitTransfer, submitWishes, submitAllergy)
   sending.value = false
   if (!result || result.status !== 'ok') {
     error.value = result?.message || 'Ошибка при отправке. Попробуйте ещё раз.'
