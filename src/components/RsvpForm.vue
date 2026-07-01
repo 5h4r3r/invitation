@@ -205,8 +205,20 @@ async function handleSubmit() {
   }
 
   if (willAttend.value === true) {
-    if (guests.value === '' || transferNeeded.value === null || drink.value === '' || hasAllergy.value === null) {
-      validationError.value = 'Заполните все обязательные поля'
+    if (guests.value === '') {
+      validationError.value = 'Укажите количество гостей'
+      return
+    }
+    if (transferNeeded.value === null) {
+      validationError.value = 'Выберите, нужен ли трансфер'
+      return
+    }
+    if (drink.value === '') {
+      validationError.value = 'Выберите предпочтение по алкоголю'
+      return
+    }
+    if (hasAllergy.value === null) {
+      validationError.value = 'Ответьте на вопрос об аллергии'
       return
     }
   }

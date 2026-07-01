@@ -98,6 +98,11 @@ export function useGuest() {
       return { status: 'error', message: 'Ошибка авторизации. Откройте ссылку из приглашения.' }
     }
 
+    if (attending === 'Да' && (!guests || guests === '' || guests === '0')) {
+      console.error('❌ Некорректное количество гостей')
+      return { status: 'error', message: 'Заполните все обязательные поля' }
+    }
+
     const params = { token: storedToken, action: 'confirm', attending, guests, transfer, wishes, drink, allergy }
     console.log('📤 Отправка подтверждения:', { attending, guests, drink, transfer, wishes, allergy })
 
