@@ -423,6 +423,10 @@ onMounted(async () => {
   text-align: center;
 }
 
+.rsvp .section-title::after {
+  background: var(--accent);
+}
+
 .honeypot {
   position: absolute;
   left: -9999px;
