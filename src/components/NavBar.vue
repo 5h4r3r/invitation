@@ -59,7 +59,8 @@ onUnmounted(() => {
   right: 0;
   z-index: 50;
   padding: 12px 0;
-  transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.3s;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.3s, border-color 0.3s;
   background: transparent;
 }
 
