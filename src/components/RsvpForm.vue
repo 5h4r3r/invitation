@@ -59,6 +59,7 @@
           <div class="form-group">
             <label for="guests">Количество гостей</label>
             <select id="guests" v-model="guests" :disabled="sending">
+              <option value="" disabled>Не выбрано</option>
               <option value="1">1 гость</option>
               <option value="2">2 гостя</option>
               <option value="3">3 гостя</option>
@@ -138,7 +139,7 @@
 
         <input type="text" v-model="botField" class="honeypot" tabindex="-1" autocomplete="off" />
 
-        <button type="submit" class="btn-primary w-full" :disabled="sending || willAttend === null || (willAttend && !drink)">
+        <button type="submit" class="btn-primary w-full" :disabled="sending || !canSubmit">
           {{ sending ? 'Отправка...' : 'Отправить' }}
         </button>
 
@@ -150,7 +151,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useGuest } from '../composables/useGuest'
 
 defineProps({
@@ -160,7 +161,7 @@ defineProps({
 const { confirmed, loading, apiError, submitConfirmation, fetchDrinks } = useGuest()
 
 const willAttend = ref(null)
-const guests = ref('1')
+const guests = ref('')
 const drink = ref('')
 const drinks = ref([])
 const transferNeeded = ref(null)
@@ -171,6 +172,15 @@ const botField = ref('')
 const formLoadedAt = ref(0)
 const sending = ref(false)
 const error = ref('')
+
+const canSubmit = computed(() => {
+  if (willAttend.value === null) return false
+  if (willAttend.value === false) return true
+  return guests.value !== ''
+    && transferNeeded.value !== null
+    && drink.value !== ''
+    && hasAllergy.value !== null
+})
 
 const titleRef = ref(null)
 const loadingRef = ref(null)
@@ -214,7 +224,6 @@ onMounted(async () => {
   const result = await fetchDrinks()
   if (result.length) {
     drinks.value = result
-    drink.value = result[0]
   }
 
   const observer = new IntersectionObserver((entries) => {
