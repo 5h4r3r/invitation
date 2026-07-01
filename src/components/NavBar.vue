@@ -58,8 +58,8 @@ onUnmounted(() => {
   left: 0;
   right: 0;
   z-index: 50;
-  padding: 16px 0;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 12px 0;
+  transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.3s;
   background: transparent;
 }
 
@@ -68,7 +68,6 @@ onUnmounted(() => {
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(242, 224, 219, 0.5);
-  padding: 10px 0;
 }
 
 .nav-container {
@@ -161,11 +160,16 @@ onUnmounted(() => {
 
 .nav-mobile {
   display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   flex-direction: column;
   gap: 4px;
   padding: 16px 24px 24px;
   background: var(--white);
   border-bottom: 1px solid var(--pink);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
 }
 
 .nav-mobile.open {
