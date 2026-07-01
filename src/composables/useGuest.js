@@ -55,15 +55,17 @@ export function useGuest() {
   async function initGuestName() {
     apiError.value = ''
 
+    const storedToken = restoreFromStorage()
+    if (storedToken) {
+      loading.value = false
+      return
+    }
+
     const urlParams = new URLSearchParams(window.location.search)
     const urlToken = urlParams.get('code')
 
     if (urlToken) {
       console.log('🔑 Код из URL:', urlToken)
-      localStorage.setItem('weddingToken', urlToken)
-      urlParams.delete('code')
-      const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '')
-      window.history.replaceState({}, document.title, newUrl)
 
       const data = await api('GET', { token: urlToken })
       if (data && data.status === 'ok') {
@@ -71,15 +73,18 @@ export function useGuest() {
         guestName.value = data.name || ''
         confirmed.value = data.confirmed === true
         saveToStorage(urlToken, guestName.value, confirmed.value)
+
+        const vToken = localStorage.getItem('weddingToken')
+        const vName = localStorage.getItem('weddingName')
+        if (vToken && vName) {
+          urlParams.delete('code')
+          const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '')
+          window.history.replaceState({}, document.title, newUrl)
+        }
       } else {
         const msg = data?.message || 'Неизвестная ошибка сервера'
         apiError.value = msg
         console.error('❌ Ошибка загрузки гостя:', msg)
-      }
-    } else {
-      const storedToken = restoreFromStorage()
-      if (!storedToken) {
-        guestName.value = ''
       }
     }
 
