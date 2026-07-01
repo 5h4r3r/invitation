@@ -53,8 +53,19 @@ onMounted(() => {
     container.appendChild(script)
   }
 
-  loadMap(mapRef.value, 'https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Af5164dfd684f78eb88a094017f1ad82fc9086f18d1a9449c0444ec59e2b4e898&width=100%25&height=400&lang=ru_RU&scroll=true')
-  loadMap(mapTransferRef.value, 'https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A93395cdf314d0cda75e31b1ec7ad4e4e841336f5452a65dc483a3d64a503f738&width=100%25&height=400&lang=ru_RU&scroll=true')
+  function lazyMap(container, src) {
+    if (!container) return
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        loadMap(container, src)
+        obs.disconnect()
+      }
+    }, { rootMargin: '200px' })
+    obs.observe(container)
+  }
+
+  lazyMap(mapRef.value, 'https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Af5164dfd684f78eb88a094017f1ad82fc9086f18d1a9449c0444ec59e2b4e898&width=100%25&height=400&lang=ru_RU&scroll=true')
+  lazyMap(mapTransferRef.value, 'https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A93395cdf314d0cda75e31b1ec7ad4e4e841336f5452a65dc483a3d64a503f738&width=100%25&height=400&lang=ru_RU&scroll=true')
 })
 </script>
 
