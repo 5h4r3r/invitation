@@ -69,7 +69,7 @@ onMounted(() => {
   position: relative;
   background: url('/img/canvas.webp') center center / cover no-repeat;
   background-attachment: fixed;
-  padding: 96px 20px;
+  padding: 80px 20px;
 }
 
 .date-place::before {
@@ -144,6 +144,12 @@ onMounted(() => {
 
 .dp-card a:hover {
   opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .date-place {
+    padding: 50px 20px;
+  }
 }
 
 @media (min-width: 768px) {

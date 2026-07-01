@@ -53,7 +53,7 @@ onMounted(() => {
   position: relative;
   background: url('/img/ohotnik.webp') center center / cover no-repeat;
   background-attachment: fixed;
-  padding: 96px 20px;
+  padding: 80px 20px;
   text-align: center;
   color: var(--white);
 }
@@ -124,6 +124,10 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
+  .timer {
+    padding: 50px 20px;
+  }
+
   .timer-block {
     width: 90px;
     height: 90px;
