@@ -36,6 +36,19 @@
           <h3>Парковка</h3>
           <p>Бесплатная парковка<br>рядом с рестораном</p>
         </div>
+
+        <div class="dp-card fade-in" ref="card4Ref" style="transition-delay: 400ms">
+          <svg class="dp-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="6" width="22" height="12" rx="2"/>
+            <circle cx="6" cy="18" r="2"/>
+            <circle cx="18" cy="18" r="2"/>
+            <line x1="6" y1="6" x2="8" y2="2"/>
+            <line x1="18" y1="6" x2="16" y2="2"/>
+            <line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+          <h3>Трансфер</h3>
+          <p>Организован трансфер от ТРЦ «Воробьёвы Горы»<br>до ресторана и обратно</p>
+        </div>
       </div>
     </div>
   </section>
@@ -48,6 +61,7 @@ const titleRef = ref(null)
 const card1Ref = ref(null)
 const card2Ref = ref(null)
 const card3Ref = ref(null)
+const card4Ref = ref(null)
 
 onMounted(() => {
   const observer = new IntersectionObserver((entries) => {
@@ -58,7 +72,7 @@ onMounted(() => {
     })
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' })
 
-  ;[titleRef.value, card1Ref.value, card2Ref.value, card3Ref.value].forEach(el => {
+  ;[titleRef.value, card1Ref.value, card2Ref.value, card3Ref.value, card4Ref.value].forEach(el => {
     if (el) observer.observe(el)
   })
 })
