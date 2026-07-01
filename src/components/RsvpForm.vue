@@ -98,38 +98,38 @@
               <option v-for="d in drinks" :key="d" :value="d">{{ d }}</option>
             </select>
           </div>
-        </template>
 
-        <div class="form-group">
-          <label>Есть ли аллергия?</label>
-          <div class="rsvp-toggle rsvp-toggle-row">
-            <button
-              type="button"
-              class="rsvp-toggle-btn rsvp-toggle-btn-half"
-              :class="{ active: hasAllergy === true }"
-              @click="hasAllergy = true"
-            >
-              Да
-            </button>
-            <button
-              type="button"
-              class="rsvp-toggle-btn rsvp-toggle-btn-half"
-              :class="{ active: hasAllergy === false }"
-              @click="hasAllergy = false"
-            >
-              Нет
-            </button>
-          </div>
-          <input
-            v-if="hasAllergy === true"
-            v-model="allergyInfo"
-            type="text"
-            placeholder="Укажите продукты, на которые аллергия"
-            class="form-input"
-            :disabled="sending"
-            style="margin-top: 10px;"
-          />
-        </div>
+            <div class="form-group">
+              <label>Есть ли аллергия?</label>
+              <div class="rsvp-toggle rsvp-toggle-row">
+                <button
+                  type="button"
+                  class="rsvp-toggle-btn rsvp-toggle-btn-half"
+                  :class="{ active: hasAllergy === true }"
+                  @click="hasAllergy = true"
+                >
+                  Да
+                </button>
+                <button
+                  type="button"
+                  class="rsvp-toggle-btn rsvp-toggle-btn-half"
+                  :class="{ active: hasAllergy === false }"
+                  @click="hasAllergy = false"
+                >
+                  Нет
+                </button>
+              </div>
+              <input
+                v-if="hasAllergy === true"
+                v-model="allergyInfo"
+                type="text"
+                placeholder="Укажите продукты, на которые аллергия"
+                class="form-input"
+                :disabled="sending"
+                style="margin-top: 10px;"
+              />
+            </div>
+          </template>
 
         <div class="form-group">
           <label for="wishes">Пожелания</label>
@@ -338,10 +338,11 @@ onMounted(async () => {
 }
 
 .form-guest-name {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   color: var(--accent);
   font-weight: 500;
   padding: 12px 0;
+  text-align: center;
 }
 
 .form-error {
