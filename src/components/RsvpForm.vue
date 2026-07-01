@@ -197,7 +197,7 @@ async function handleSubmit() {
 
   const submitGuests = willAttend ? guests.value : '0'
   const submitDrink = willAttend ? drink.value : 'Не пью'
-  const submitTransfer = willAttend ? (transferNeeded.value ? 'yes' : 'no') : 'no'
+  const submitTransfer = willAttend ? (transferNeeded.value ? 'Да' : 'Нет') : 'Нет'
   const submitWishes = wishes.value
   const submitAllergy = hasAllergy.value ? (hasAllergy.value === true ? (allergyInfo.value || 'Да') : 'Нет') : ''
 
